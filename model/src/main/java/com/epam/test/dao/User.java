@@ -1,15 +1,31 @@
-package com.epam.test;
+package com.epam.test.dao;
 
 import java.util.Objects;
 
 /**
- * Created by charadziej on 2/13/17.
+ * Created by mentor on 13.2.17.
+ * <p>
+ * This is our 1st bean class.
  */
-  public class User {
-  private Integer userId;
-  private String login;
-  private String password;
-  private String description;
+public class User {
+
+    private Integer userId;
+
+    private String login;
+
+    private String password;
+
+    private String description;
+
+    public User() {
+    }
+
+    public User(Integer userId, String login, String password, String description) {
+        this.userId = userId;
+        this.login = login;
+        this.password = password;
+        this.description = description;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -68,6 +84,4 @@ import java.util.Objects;
                 ", description='" + description + '\'' +
                 '}';
     }
-
-
 }
