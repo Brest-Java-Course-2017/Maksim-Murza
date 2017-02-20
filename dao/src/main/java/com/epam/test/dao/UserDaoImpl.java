@@ -5,6 +5,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.beans.factory.annotation.Value;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -18,14 +21,20 @@ import java.util.Map;
  */
 public class UserDaoImpl implements UserDao {
 
+    @Value("${user.select}")
+    private String GET_ALL_USERS_SQL;
+    @Value("${user.selectById}")
+    private String GET_USER_BY_ID_SQL;
+    @Value("${user.addUser}")
+    private String ADD_USER_SQL;
+    @Value("${user.updateUser}")
+    private String UPDATE_USER_SQL;
+    @Value("${user.deleteUser}")
+    private String DELETE_USER_BY_ID_SQL;
+
+    private static final Logger LOGGER = LogManager.getLogger();
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-    String getAllUsersSql = "SELECT user_id, login, password, description from app_user";
-    String getUserByIdSql = "SELECT * from app_user WHERE user_id = :p_user_id";
-    String addUserSql = "INSERT INTO app_user (user_id, login, password, description) VALUES(:p_user_id, :p_login, :p_password, :p_description);";
-    String updateUserSql = "UPDATE app_user SET login=:p_login,password=:p_password,description=:p_description WHERE user_id=:p_user_id;";
-    String deleteUserSql = "DELETE FROM app_user WHERE user_id = :p_user_id;";
 
     public UserDaoImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -34,32 +43,37 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return jdbcTemplate.query(getAllUsersSql, new UserRowMapper());
+        LOGGER.debug("getAllUsers()");
+        return jdbcTemplate.query(GET_ALL_USERS_SQL, new UserRowMapper());
     }
 
     @Override
     public User getUserById(Integer userId) {
+        LOGGER.debug("getUserById({})", userId);
         SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_id", userId);
         User user = namedParameterJdbcTemplate.queryForObject(
-                getUserByIdSql, namedParameters, new UserRowMapper());
+                GET_USER_BY_ID_SQL, namedParameters, new UserRowMapper());
         return user;
     }
 
     @Override
     public Integer addUser(User user) {
-        namedParameterJdbcTemplate.update(addUserSql, getState(user));
+        LOGGER.debug("addUser({})", user);
+        namedParameterJdbcTemplate.update(ADD_USER_SQL, getState(user));
         return user.getUserId();
     }
 
     @Override
     public void updateUser(User user) {
-        namedParameterJdbcTemplate.update(updateUserSql, getState(user));
+        LOGGER.debug("updateUser({})", user);
+        namedParameterJdbcTemplate.update(UPDATE_USER_SQL, getState(user));
     }
 
     @Override
     public void deleteUser(Integer userId) {
+        LOGGER.debug("deleteUser({})", userId);
         SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_id", userId);
-        namedParameterJdbcTemplate.update(deleteUserSql, namedParameters);
+        namedParameterJdbcTemplate.update(DELETE_USER_BY_ID_SQL, namedParameters);
     }
 
     private Map<String, java.lang.Object> getState(User user) {
