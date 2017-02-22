@@ -1,13 +1,14 @@
-package com.epam.test.dao;
+package com.epam.test.service;
 
+import com.epam.test.dao.User;
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
 /**
-* DAO interface.
-*/
-public interface UserDao {
+ * Created by mentor on 20.2.17.
+ */
+public interface UserService {
 
     /**
      * Get all users list.

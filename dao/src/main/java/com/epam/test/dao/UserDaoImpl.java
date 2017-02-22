@@ -1,13 +1,16 @@
 package com.epam.test.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.beans.factory.annotation.Value;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -21,20 +24,33 @@ import java.util.Map;
  */
 public class UserDaoImpl implements UserDao {
 
-    @Value("${user.select}")
-    private String GET_ALL_USERS_SQL;
-    @Value("${user.selectById}")
-    private String GET_USER_BY_ID_SQL;
-    @Value("${user.addUser}")
-    private String ADD_USER_SQL;
-    @Value("${user.updateUser}")
-    private String UPDATE_USER_SQL;
-    @Value("${user.deleteUser}")
-    private String DELETE_USER_BY_ID_SQL;
-
     private static final Logger LOGGER = LogManager.getLogger();
+
+    static final String USER_ID = "user_id";
+    static final String LOGIN = "login";
+    static final String PASSWORD = "password";
+    static final String DESCRIPTION = "description";
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Value("${user.select}")
+    String getAllUsersSql;
+
+    @Value("${user.selectByLogin}")
+    String getUserByLoginSql;
+
+    @Value("${user.selectById}")
+    String getUserByIdSql;
+
+    @Value("${user.insert}")
+    String insertUserSql;
+
+    @Value("${user.update}")
+    String updateUserSql;
+
+    @Value("${user.delete}")
+    String deleteUserSql;
 
     public UserDaoImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -42,57 +58,72 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers() throws DataAccessException {
         LOGGER.debug("getAllUsers()");
-        return jdbcTemplate.query(GET_ALL_USERS_SQL, new UserRowMapper());
+        return jdbcTemplate.query(getAllUsersSql, new UserRowMapper());
     }
 
     @Override
-    public User getUserById(Integer userId) {
+    public User getUserById(Integer userId) throws DataAccessException {
         LOGGER.debug("getUserById({})", userId);
         SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_id", userId);
         User user = namedParameterJdbcTemplate.queryForObject(
-                GET_USER_BY_ID_SQL, namedParameters, new UserRowMapper());
+                getUserByIdSql, namedParameters, new UserRowMapper());
         return user;
     }
 
     @Override
-    public Integer addUser(User user) {
-        LOGGER.debug("addUser({})", user);
-        namedParameterJdbcTemplate.update(ADD_USER_SQL, getState(user));
-        return user.getUserId();
+    public User getUserByLogin(String login) throws DataAccessException {
+        LOGGER.debug("getUserByLogin({})", login);
+        SqlParameterSource namedParameters = new MapSqlParameterSource("p_login", login);
+        User user = namedParameterJdbcTemplate.queryForObject(
+                getUserByLoginSql, namedParameters, new UserRowMapper());
+        return user;
     }
 
     @Override
-    public void updateUser(User user) {
-        LOGGER.debug("updateUser({})", user);
-        namedParameterJdbcTemplate.update(UPDATE_USER_SQL, getState(user));
+    public Integer addUser(User user) throws DataAccessException {
+        LOGGER.debug("addUser(user): login = {}", user.getLogin());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(USER_ID, user.getUserId());
+        parameterSource.addValue(LOGIN, user.getLogin());
+        parameterSource.addValue(PASSWORD, user.getPassword());
+        parameterSource.addValue(DESCRIPTION, user.getDescription());
+        namedParameterJdbcTemplate.update(insertUserSql, parameterSource, keyHolder);
+        return keyHolder.getKey().intValue();
     }
 
     @Override
-    public void deleteUser(Integer userId) {
-        LOGGER.debug("deleteUser({})", userId);
-        SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_id", userId);
-        namedParameterJdbcTemplate.update(DELETE_USER_BY_ID_SQL, namedParameters);
+    public int updateUser(User user) throws DataAccessException {
+
+        LOGGER.debug("update user {}", user);
+        Map<String, Object> params = new HashMap<>();
+        params.put(USER_ID, user.getUserId());
+        params.put(LOGIN, user.getLogin());
+        params.put(PASSWORD, user.getPassword());
+        params.put(DESCRIPTION, user.getDescription());
+        return namedParameterJdbcTemplate.update(updateUserSql, params);
     }
 
-    private Map<String, java.lang.Object> getState(User user) {
-        Map<String, java.lang.Object> userState = new HashMap<>();
-        userState.put("p_user_id", user.getUserId());
-        userState.put("p_login", user.getLogin());
-        userState.put("p_password", user.getPassword());
-        userState.put("p_description", user.getDescription());
-        return userState;
+    @Override
+    public int deleteUser(Integer userId) throws DataAccessException {
+
+        LOGGER.debug("delete user with id = {}", userId);
+        Map<String, Object> params = new HashMap<>();
+        params.put(USER_ID, userId);
+        return namedParameterJdbcTemplate.update(deleteUserSql, params);
     }
 
     private class UserRowMapper implements RowMapper<User> {
+
         @Override
         public User mapRow(ResultSet resultSet, int i) throws SQLException {
             User user = new User(
-                    resultSet.getInt("user_id"),
-                    resultSet.getString("login"),
-                    resultSet.getString("password"),
-                    resultSet.getString("description"));
+                    resultSet.getInt(USER_ID),
+                    resultSet.getString(LOGIN),
+                    resultSet.getString(PASSWORD),
+                    resultSet.getString(DESCRIPTION));
             return user;
         }
     }

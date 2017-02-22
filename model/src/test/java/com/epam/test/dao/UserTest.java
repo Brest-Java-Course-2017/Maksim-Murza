@@ -1,6 +1,7 @@
 package com.epam.test.dao;
 
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Created by mentor on 13.2.17.
@@ -9,7 +10,7 @@ public class UserTest {
 
     public static final int USER_ID = 11;
 
-    @org.junit.Test
+    @Test
     public void getUserId() throws Exception {
 
         User user = new User();
@@ -17,17 +18,17 @@ public class UserTest {
         Assert.assertEquals("User id: ", (Integer) USER_ID, user.getUserId());
     }
 
-    @org.junit.Test
+    @Test
     public void getLogin() throws Exception {
 
     }
 
-    @org.junit.Test
+    @Test
     public void getPassword() throws Exception {
 
     }
 
-    @org.junit.Test
+    @Test
     public void getDescription() throws Exception {
 
     }
