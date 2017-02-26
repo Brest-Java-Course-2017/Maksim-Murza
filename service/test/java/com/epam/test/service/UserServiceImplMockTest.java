@@ -21,8 +21,8 @@ import static org.easymock.EasyMock.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:service-test-mock.xml"})
 public class UserServiceImplMockTest {
-    private static final Logger LOGGER = LogManager.getLogger();
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final User user = new User("userLogin3", "userPassword3");
 
     @Autowired
