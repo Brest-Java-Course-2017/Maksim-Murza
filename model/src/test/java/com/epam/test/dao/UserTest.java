@@ -20,17 +20,23 @@ public class UserTest {
 
     @Test
     public void getLogin() throws Exception {
-
+        User user = new User();
+        user.setLogin("login");
+        Assert.assertEquals("User login: ", "login", user.getLogin());
     }
 
     @Test
     public void getPassword() throws Exception {
-
+        User user = new User();
+        user.setPassword("password");
+        Assert.assertEquals("User password: ", "password", user.getPassword());
     }
 
     @Test
     public void getDescription() throws Exception {
-
+        User user = new User();
+        user.setDescription("description");
+        Assert.assertEquals("User description: ", "description", user.getDescription());
     }
 
 }
