@@ -6,9 +6,10 @@ import org.junit.Test;
 /**
  * Created by mentor on 13.2.17.
  */
+
 public class UserTest {
 
-    public static final int USER_ID = 11;
+    private static final int USER_ID = 11;
 
     @Test
     public void getUserId() throws Exception {

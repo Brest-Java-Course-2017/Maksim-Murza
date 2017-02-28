@@ -18,14 +18,14 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
-    //curl -v localhost:8080/users
+    //curl -v localhost:8088/users
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public @ResponseBody List<User> getUsers() {
         LOGGER.debug("getUsers()");
         return userService.getAllUsers();
     }
 
-    //curl -H "Content-Type: application/json" -X POST -d '{"login":"xyz","password":"xyz"}' -v localhost:8080/user
+    //curl -H "Content-Type: application/json" -X POST -d '{"login":"xyz","password":"xyz"}' -v localhost:8088/user
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody Integer addUser(@RequestBody User user) {
@@ -33,7 +33,7 @@ public class UserRestController {
         return userService.addUser(user);
     }
 
-    //curl -X PUT -v localhost:8080/user/2/l1/p1/d1
+    //curl -X PUT -v localhost:8088/user/2/l1/p1/d1
     @RequestMapping(value = "/user/{id}/{login}/{password}/{desc}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public void updateUser(@PathVariable(value = "id") int id, @PathVariable(value = "desc") String desc,
@@ -42,7 +42,7 @@ public class UserRestController {
         userService.updateUser(new User(id, login, password, desc));
     }
 
-    //curl -v localhost:8080/user/userLogin1
+    //curl -v localhost:8088/user/userLogin1
     @RequestMapping(value = "/user/{login}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.FOUND)
     public @ResponseBody

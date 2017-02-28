@@ -7,9 +7,10 @@
         <groupId>com.epam.test</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>dao</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>com.epam.test</groupId>
@@ -23,7 +24,6 @@
             <groupId>com.epam.test</groupId>
             <artifactId>test-db</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -56,7 +56,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>

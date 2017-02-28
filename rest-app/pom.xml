@@ -7,9 +7,11 @@
         <groupId>com.epam.test</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
     <artifactId>rest-app</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>com.epam.test</groupId>
@@ -48,5 +50,24 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- embedded Jetty server, for testing -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+                    <httpConnector>
+                        <port>8088</port>
+                    </httpConnector>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -19,6 +19,8 @@
         <module>test-db</module>
         <module>web-app</module>
         <module>rest-app</module>
+        <module>client-api</module>
+        <module>client-rest</module>
     </modules>
 
     <properties>
@@ -155,13 +157,22 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet-api.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.epam.test</groupId>
+                <artifactId>client-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.epam.test</groupId>
+                <artifactId>client-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <distributionManagement>
         <site>
             <id>${project.artifactId}-site</id>
-            <name>${project.name}</name>
             <url>${project.baseUri}</url>
         </site>
     </distributionManagement>
