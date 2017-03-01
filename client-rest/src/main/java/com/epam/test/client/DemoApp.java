@@ -39,9 +39,13 @@ public class DemoApp {
         System.out.println("| Options:                      |");
         System.out.println("|        1. Get all users       |");
         System.out.println("|        2. Get user by login   |");
-        System.out.println("|        3. Exit                |");
+        System.out.println("|        3. Get user by id      |");
+        System.out.println("|        4. Add user            |");
+        System.out.println("|        5. Update user         |");
+        System.out.println("|        6. Delete user         |");
+        System.out.println("|        7. Exit                |");
         System.out.println("=================================");
-        while (swValue != 3) {
+        while (swValue != 7) {
             System.out.print("Select option: ");
             if (sc.hasNextInt()) {
                 swValue = sc.nextInt();
@@ -61,6 +65,18 @@ public class DemoApp {
                 getUserByLogin();
                 break;
             case 3:
+                getUserById();
+                break;
+            case 4:
+                addUser();
+                break;
+            case 5:
+                updateUser();
+                break;
+            case 6:
+                deleteUser();
+                break;
+            case 7:
                 System.out.println("Exit.");
                 break;
             default:
@@ -87,5 +103,65 @@ public class DemoApp {
         } catch (ServerDataAccessException ex) {
             System.out.println("    ERROR: " + ex.getMessage());
         }
+    }
+
+    private void getUserById() {
+        Integer userId = 0;
+        System.out.print("    Enter user id: ");
+        if (sc.hasNextInt()) {
+            userId = sc.nextInt();
+        }
+
+        try {
+            User user = usersConsumer.getUserById(userId);
+            System.out.println("    User: " + user);
+        } catch (ServerDataAccessException ex) {
+            System.out.println("    ERROR: " + ex.getMessage());
+        }
+    }
+
+    private void addUser() {
+        User user = new User();
+        Integer userId = 0;
+        String userLogin = "";
+        String userPassword = "";
+        String userDescription = "";
+
+        System.out.print("    Enter user id: ");
+        if (sc.hasNextInt()) {
+            userId = sc.nextInt();
+        }
+        System.out.print("    Enter user login: ");
+        if (sc.hasNextLine()) {
+            userLogin = sc.next();
+        }
+        System.out.print("    Enter user password: ");
+        if (sc.hasNextLine()) {
+            userPassword = sc.next();
+        }
+        System.out.print("    Enter user description: ");
+        if (sc.hasNextLine()) {
+            userDescription = sc.next();
+        }
+
+        user.setUserId(userId);
+        user.setLogin(userLogin);
+        user.setPassword(userPassword);
+        user.setDescription(userDescription);
+
+        try {
+            Integer id = usersConsumer.addUser(user);
+            System.out.println("    User: " + user);
+        } catch (ServerDataAccessException ex) {
+            System.out.println("    ERROR: " + ex.getMessage());
+        }
+    }
+
+    private void updateUser() {
+
+    }
+
+    private void deleteUser() {
+
     }
 }

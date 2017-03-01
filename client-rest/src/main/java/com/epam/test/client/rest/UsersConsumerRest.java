@@ -3,6 +3,7 @@ package com.epam.test.client.rest;
 import com.epam.test.client.exception.ServerDataAccessException;
 import com.epam.test.client.rest.api.UsersConsumer;
 import com.epam.test.dao.User;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -39,7 +40,9 @@ public class UsersConsumerRest implements UsersConsumer {
 
     @Override
     public User getUserById(Integer userId) throws ServerDataAccessException {
-        return null;
+        ResponseEntity responseEntity = restTemplate.getForEntity(hostUrl + "/" + urlUser+ "/id/" + userId, User.class);
+        Object user = responseEntity.getBody();
+        return (User) user;
     }
 
     @Override
@@ -51,7 +54,9 @@ public class UsersConsumerRest implements UsersConsumer {
 
     @Override
     public Integer addUser(User user) throws ServerDataAccessException {
-        return null;
+        ResponseEntity responseEntity = restTemplate.postForEntity(hostUrl + "/" + urlUser, HttpMethod.POST,User.class);
+        Integer id = (Integer) responseEntity.getBody();
+        return id;
     }
 
     @Override

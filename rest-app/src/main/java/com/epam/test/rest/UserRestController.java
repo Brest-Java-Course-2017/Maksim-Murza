@@ -50,4 +50,19 @@ public class UserRestController {
         LOGGER.debug("getUser: login = {}", login);
         return userService.getUserByLogin(login);
     }
+
+    @RequestMapping(value = "/user/id/{id}", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.FOUND)
+    public @ResponseBody
+    User getUserById(@PathVariable(value = "id") Integer id) {
+        LOGGER.debug("getUser: id = {}", id);
+        return userService.getUserById(id);
+    }
+
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    public void deleteUser(@PathVariable(value = "id") Integer id) {
+        LOGGER.debug("deleteUser: id = {}", id);
+        userService.deleteUser(id);
+    }
 }
