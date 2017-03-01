@@ -54,18 +54,24 @@ public class UsersConsumerRest implements UsersConsumer {
 
     @Override
     public Integer addUser(User user) throws ServerDataAccessException {
-        ResponseEntity responseEntity = restTemplate.postForEntity(hostUrl + "/" + urlUser, HttpMethod.POST,User.class);
+        ResponseEntity responseEntity = restTemplate.postForEntity(hostUrl + "/" + urlUser, HttpMethod.POST, User.class);
+        //ResponseEntity responseEntity = restTemplate.exchange(hostUrl + "/" + urlUser, HttpMethod.POST, , User.class);
         Integer id = (Integer) responseEntity.getBody();
         return id;
     }
 
     @Override
     public int updateUser(User user) throws ServerDataAccessException {
+        ResponseEntity neededEntity = restTemplate.getForEntity(hostUrl + "/" + urlUser+ "/id/" + user.getUserId(), User.class);
+        restTemplate.exchange(hostUrl + "/" + urlUser + "/" +
+                user.getUserId() + "/" + user.getLogin() + "/" + user.getPassword() + "/" +
+                user.getDescription(), HttpMethod.PUT, neededEntity, User.class);
         return 0;
     }
 
     @Override
     public int deleteUser(Integer userId) throws ServerDataAccessException {
+        restTemplate.delete(hostUrl + "/" + urlUser + "/" + userId);
         return 0;
     }
 }

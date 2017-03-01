@@ -36,8 +36,9 @@ public class UserRestController {
     //curl -X PUT -v localhost:8088/user/2/l1/p1/d1
     @RequestMapping(value = "/user/{id}/{login}/{password}/{desc}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    public void updateUser(@PathVariable(value = "id") int id, @PathVariable(value = "desc") String desc,
-            @PathVariable(value = "login") String login, @PathVariable(value = "password") String password) {
+    public void updateUser(@PathVariable(value = "id") int id, @PathVariable(value = "login") String login,
+                           @PathVariable(value = "password") String password,
+                           @PathVariable(value = "desc") String desc) {
         LOGGER.debug("updateUser: id = {}", id);
         userService.updateUser(new User(id, login, password, desc));
     }

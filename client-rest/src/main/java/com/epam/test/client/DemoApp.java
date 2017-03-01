@@ -158,10 +158,54 @@ public class DemoApp {
     }
 
     private void updateUser() {
+        Integer userId = 0;
+        String userLogin = "";
+        String userPassword = "";
+        String userDescription = "";
 
+        System.out.print("    Enter user id: ");
+        if (sc.hasNextInt()) {
+            userId = sc.nextInt();
+        }
+
+        try {
+            User user = usersConsumer.getUserById(userId);
+            user.setUserId(userId);
+            System.out.print("    Enter new login: ");
+            if (sc.hasNextLine()) {
+                userLogin = sc.next();
+            }
+            System.out.print("    Enter new password: ");
+            if (sc.hasNextLine()) {
+                userPassword = sc.next();
+            }
+            System.out.print("    Enter new description: ");
+            if (sc.hasNextLine()) {
+                userDescription = sc.next();
+            }
+
+            user.setUserId(userId);
+            user.setLogin(userLogin);
+            user.setPassword(userPassword);
+            user.setDescription(userDescription);
+
+            int id = usersConsumer.updateUser(user);
+        } catch (ServerDataAccessException ex) {
+            System.out.println("    ERROR: " + ex.getMessage());
+        }
     }
 
     private void deleteUser() {
+        Integer userId = 0;
+        System.out.print("    Enter user id: ");
+        if (sc.hasNextInt()) {
+            userId = sc.nextInt();
+        }
 
+        try {
+            usersConsumer.deleteUser(userId);
+        } catch (ServerDataAccessException ex) {
+            System.out.println("    ERROR: " + ex.getMessage());
+        }
     }
 }
