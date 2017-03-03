@@ -1,2 +1,1 @@
-# Maksim-Murza
-edited
+# Hardware catalog
