@@ -1,10 +1,13 @@
 package com.github.charadziej.project.dao;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import java.lang.reflect.Type;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.sql.DataSource;
 import java.util.List;
 
 /**
@@ -12,23 +15,27 @@ import java.util.List;
  */
 public class HardwareTypeDaoImpl implements HardwareTypeDao {
 
+    private JdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     private static final String TYPE_ID = "type_id";
     private static final String TYPE_NAME = "type_name";
     private static final String QUANTITY = "quantity";
 
-    public List<Type> getAllTypes() throws DataAccessException {
+    public HardwareTypeDaoImpl(DataSource dataSource) {
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    }
+
+    public List<HardwareType> getAllTypes() throws DataAccessException {
         return null;
     }
 
-    public Type getTypeById(Integer typeId) throws DataAccessException {
+    public HardwareType getTypeById(Integer typeId) throws DataAccessException {
         return null;
     }
 
-    public Type getTypeByName(String typeName) throws DataAccessException {
-        return null;
-    }
-
-    public Integer getQuantity(Integer typeId) throws DataAccessException {
+    public HardwareType getTypeByName(String typeName) throws DataAccessException {
         return null;
     }
 

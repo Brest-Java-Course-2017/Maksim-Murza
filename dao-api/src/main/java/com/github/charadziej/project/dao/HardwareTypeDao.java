@@ -2,7 +2,6 @@ package com.github.charadziej.project.dao;
 
 import org.springframework.dao.DataAccessException;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ public interface HardwareTypeDao {
      *
      * @return all types list
      */
-    List<Type> getAllTypes() throws DataAccessException;
+    List<HardwareType> getAllTypes() throws DataAccessException;
 
     /**
      * Get type by id.
@@ -23,7 +22,7 @@ public interface HardwareTypeDao {
      * @param typeId type identifier.
      * @return type.
      */
-    Type getTypeById(Integer typeId) throws DataAccessException;
+    HardwareType getTypeById(Integer typeId) throws DataAccessException;
 
     /**
      * Get type by name.
@@ -31,15 +30,8 @@ public interface HardwareTypeDao {
      * @param typeName type name.
      * @return type.
      */
-    Type getTypeByName(String typeName) throws DataAccessException;
+    HardwareType getTypeByName(String typeName) throws DataAccessException;
 
-    /**
-     * Get quantity of models, which are belong to selected type.
-     *
-     * @param typeId type identifier.
-     * @return quantity.
-     */
-    Integer getQuantity(Integer typeId) throws DataAccessException;
 
     /**
      * Add new type.

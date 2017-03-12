@@ -2,8 +2,11 @@ package com.github.charadziej.project.dao;
 
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -14,10 +17,18 @@ import java.util.List;
  */
 public class HardwareModelDaoImpl implements HardwareModelDao {
 
+    private JdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     private static final String MODEL_ID = "model_id";
     private static final String MODEL_NAME = "model_name";
     private static final String MODEL_TYPE = "model_type";
     private static final String RELEASE_DATE = "release_date";
+
+    public HardwareModelDaoImpl(DataSource dataSource) {
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    }
 
     public List<HardwareModel> getAllModels() throws DataAccessException {
         return null;
@@ -41,6 +52,10 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
 
     public int deleteModel(HardwareModel model) throws DataAccessException {
         return 0;
+    }
+
+    public void sortModel(Date begin, Date end) throws DataAccessException {
+
     }
 
     private class HardwareModelRowMapper implements RowMapper<HardwareModel> {

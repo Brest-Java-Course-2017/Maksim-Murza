@@ -2,6 +2,7 @@ package com.github.charadziej.project.dao;
 
 import org.springframework.dao.DataAccessException;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,4 +56,12 @@ public interface HardwareModelDao {
      * @return id.
      */
     int deleteModel(HardwareModel model) throws DataAccessException;
+
+    /**
+     * Sort model.
+     *
+     * @param begin, end
+     * @return
+     */
+    void sortModel(Date begin, Date end) throws DataAccessException;
 }
