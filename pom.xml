@@ -22,6 +22,8 @@
         <java.version>1.8</java.version>
         <junit.version>4.12</junit.version>
         <spring.version>4.3.6.RELEASE</spring.version>
+        <h2.version>1.4.194</h2.version>
+        <log4j2.version>2.8</log4j2.version>
     </properties>
 
     <dependencyManagement>
@@ -51,6 +53,21 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-tx</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

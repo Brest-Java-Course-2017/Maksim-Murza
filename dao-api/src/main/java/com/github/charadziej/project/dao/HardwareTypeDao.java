@@ -6,9 +6,9 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * DAO interface of Type
+ * DAO interface of HardwareType
  */
-public interface TypeDao {
+public interface HardwareTypeDao {
 
     /**
      * Get all types list.

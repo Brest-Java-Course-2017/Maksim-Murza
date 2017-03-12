@@ -6,9 +6,9 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * Implementation of Type's DAO
+ * Implementation of HardwareType's DAO
  */
-public class TypeDaoImpl implements TypeDao {
+public class HardwareTypeDaoImpl implements HardwareTypeDao {
     public List<Type> getAllTypes() throws DataAccessException {
         return null;
     }

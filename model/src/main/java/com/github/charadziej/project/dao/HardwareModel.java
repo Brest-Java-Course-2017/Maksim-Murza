@@ -4,29 +4,29 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * This class describes our entity "Model"
+ * This class describes our entity "HardwareModel"
  */
-public class Model {
+public class HardwareModel {
 
-    private Integer modelId;
+    private Integer id;
     private String name;
     private String type;
     private Date releaseDate;
 
-    public Model() {
+    public HardwareModel() {
 
     }
 
-    public Integer getModelId() {
-        return modelId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setModelId(Integer modelId) {
-        this.modelId = modelId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Model(int modelId, String name, String type, Date releaseDate) {
-        this.modelId = (Integer) modelId;
+    public HardwareModel(int id, String name, String type, Date releaseDate) {
+        this.id = (Integer) id;
         this.name = name;
         this.type = type;
         this.releaseDate = releaseDate;
@@ -60,9 +60,9 @@ public class Model {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Model model = (Model) o;
+        HardwareModel model = (HardwareModel) o;
 
-        return modelId.equals(model.modelId) &&
+        return id.equals(model.id) &&
                 name.equals(model.name) &&
                 type.equals(model.type) &&
                 releaseDate.equals(model.releaseDate);
@@ -70,13 +70,13 @@ public class Model {
 
     @Override
     public int hashCode() {
-        return Objects.hash(modelId, name, type, releaseDate);
+        return Objects.hash(id, name, type, releaseDate);
     }
 
     @Override
     public String toString() {
-        return "Model{" +
-                "modelId=" + modelId +
+        return "HardwareModel{" +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", releaseDate=" + releaseDate +

@@ -1,17 +1,18 @@
-import com.github.charadziej.project.dao.Type;
+package com.github.charadziej.project.dao;
+
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Class for testing Type's methods.
+ * Class for testing HardwareType's methods.
  */
 
-public class TypeTest {
+public class HardwareTypeTest {
 
     private static final String NAME = "CPU";
     private static final Integer ID = 1;
 
-    Type type = new Type();
+    HardwareType type = new HardwareType();
 
     @Test
     public void getName() throws Exception {
@@ -21,8 +22,8 @@ public class TypeTest {
 
     @Test
     public void getTypeIdTest() throws Exception {
-        type.setTypeId(ID);
-        Assert.assertEquals("Check type's id: ", ID, type.getTypeId());
+        type.setId(ID);
+        Assert.assertEquals("Check type's id: ", ID, type.getId());
     }
 
 }

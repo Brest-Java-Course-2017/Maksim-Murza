@@ -5,16 +5,16 @@ import org.springframework.dao.DataAccessException;
 import java.util.List;
 
 /**
- * DAO interface of Model
+ * DAO interface of HardwareModel
  */
-public interface ModelDao {
+public interface HardwareModelDao {
 
     /**
      * Get all models list.
      *
      * @return all models list
      */
-    List<Model> getAllModels() throws DataAccessException;
+    List<HardwareModel> getAllModels() throws DataAccessException;
 
     /**
      * Get model by id.
@@ -22,7 +22,7 @@ public interface ModelDao {
      * @param modelId type identifier.
      * @return model.
      */
-    Model getModelById(Integer modelId) throws DataAccessException;
+    HardwareModel getModelById(Integer modelId) throws DataAccessException;
 
     /**
      * Get model by name.
@@ -30,7 +30,7 @@ public interface ModelDao {
      * @param name model name.
      * @return model.
      */
-    Model getModelByName(String name) throws DataAccessException;
+    HardwareModel getModelByName(String name) throws DataAccessException;
 
     /**
      * Add new model.
@@ -38,7 +38,7 @@ public interface ModelDao {
      * @param model
      * @return id.
      */
-    int addModel(Model model) throws DataAccessException;
+    int addModel(HardwareModel model) throws DataAccessException;
 
     /**
      * Update model.
@@ -46,7 +46,7 @@ public interface ModelDao {
      * @param model
      * @return id.
      */
-    int updateModel(Model model) throws DataAccessException;
+    int updateModel(HardwareModel model) throws DataAccessException;
 
     /**
      * Delete model.
@@ -54,5 +54,5 @@ public interface ModelDao {
      * @param model
      * @return id.
      */
-    int deleteModel(Model model) throws DataAccessException;
+    int deleteModel(HardwareModel model) throws DataAccessException;
 }
