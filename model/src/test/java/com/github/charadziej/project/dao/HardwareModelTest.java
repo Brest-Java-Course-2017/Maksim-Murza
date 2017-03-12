@@ -11,35 +11,35 @@ import java.util.Date;
 
 public class HardwareModelTest {
 
-    private static final String NAME = "Intel core i5";
-    private static final String TYPE = "CPU";
-    private static final Date RELEASE = new Date(2015, 11, 10); //Date(int year, int month, int date)
-    private static final Integer ID = 1;
+    private static final Integer MODEL_ID = 1;
+    private static final String MODEL_NAME = "Intel core i5";
+    private static final String MODEL_TYPE = "CPU";
+    private static final Date RELEASE_DATE = new Date(2015, 11, 10); //Date(int year, int month, int date)
 
     HardwareModel model = new HardwareModel();
 
     @Test
     public void getModelId() throws Exception {
-        model.setId(ID);
-        Assert.assertEquals("check model's id: ", ID, model.getId());
+        model.setModelId(MODEL_ID);
+        Assert.assertEquals("check model's id: ", MODEL_ID, model.getModelId());
     }
 
     @Test
     public void getName() throws Exception {
-        model.setName(NAME);
-        Assert.assertEquals("check model's name: ", NAME, model.getName());
+        model.setModelName(MODEL_NAME);
+        Assert.assertEquals("check model's name: ", MODEL_NAME, model.getModelName());
     }
 
     @Test
     public void getType() throws Exception {
-        model.setType(TYPE);
-        Assert.assertEquals("check model's type: ", TYPE, model.getType());
+        model.setModelType(MODEL_TYPE);
+        Assert.assertEquals("check model's type: ", MODEL_TYPE, model.getModelType());
     }
 
     @Test
     public void getReleaseDate() throws Exception {
-        model.setReleaseDate(RELEASE);
-        Assert.assertEquals("check model's release date: ", RELEASE, model.getReleaseDate());
+        model.setReleaseDate(RELEASE_DATE);
+        Assert.assertEquals("check model's release date: ", RELEASE_DATE, model.getReleaseDate());
     }
 
 }

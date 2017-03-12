@@ -9,21 +9,28 @@ import org.junit.Test;
 
 public class HardwareTypeTest {
 
-    private static final String NAME = "CPU";
-    private static final Integer ID = 1;
+    private static final Integer TYPE_ID = 1;
+    private static final String TYPE_NAME = "CPU";
+    private static final Integer QUANTITY = 1;
 
     HardwareType type = new HardwareType();
 
     @Test
-    public void getName() throws Exception {
-        type.setName(NAME);
-        Assert.assertEquals("Check type's name: ", NAME, type.getName());
+    public void getTypeIdTest() throws Exception {
+        type.setTypeId(TYPE_ID);
+        Assert.assertEquals("Check type's id: ", TYPE_ID, type.getTypeId());
     }
 
     @Test
-    public void getTypeIdTest() throws Exception {
-        type.setId(ID);
-        Assert.assertEquals("Check type's id: ", ID, type.getId());
+    public void getName() throws Exception {
+        type.setTypeName(TYPE_NAME);
+        Assert.assertEquals("Check type's name: ", TYPE_NAME, type.getTypeName());
+    }
+
+    @Test
+    public void getQuantityTest() throws Exception {
+        type.setQuantity(QUANTITY);
+        Assert.assertEquals("Check type's quantity: ", QUANTITY, type.getQuantity());
     }
 
 }

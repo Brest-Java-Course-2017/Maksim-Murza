@@ -27,10 +27,10 @@ public interface HardwareModelDao {
     /**
      * Get model by name.
      *
-     * @param name model name.
+     * @param modelName model name.
      * @return model.
      */
-    HardwareModel getModelByName(String name) throws DataAccessException;
+    HardwareModel getModelByName(String modelName) throws DataAccessException;
 
     /**
      * Add new model.

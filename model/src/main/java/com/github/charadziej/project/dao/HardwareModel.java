@@ -8,44 +8,44 @@ import java.util.Objects;
  */
 public class HardwareModel {
 
-    private Integer id;
-    private String name;
-    private String type;
+    private Integer modelId;
+    private String modelName;
+    private String modelType;
     private Date releaseDate;
 
     public HardwareModel() {
 
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public HardwareModel(int id, String name, String type, Date releaseDate) {
-        this.id = (Integer) id;
-        this.name = name;
-        this.type = type;
+    public HardwareModel(int modelId, String modelName, String modelType, Date releaseDate) {
+        this.modelId = (Integer) modelId;
+        this.modelName = modelName;
+        this.modelType = modelType;
         this.releaseDate = releaseDate;
     }
 
-    public String getName() {
-        return name;
+    public Integer getModelId() {
+        return modelId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setModelId(Integer modelId) {
+        this.modelId = modelId;
     }
 
-    public String getType() {
-        return type;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
+    public String getModelType() {
+        return modelType;
+    }
+
+    public void setModelType(String modelType) {
+        this.modelType = modelType;
     }
 
     public Date getReleaseDate() {
@@ -62,23 +62,23 @@ public class HardwareModel {
         if (o == null || getClass() != o.getClass()) return false;
         HardwareModel model = (HardwareModel) o;
 
-        return id.equals(model.id) &&
-                name.equals(model.name) &&
-                type.equals(model.type) &&
+        return modelId.equals(model.modelId) &&
+                modelName.equals(model.modelName) &&
+                modelType.equals(model.modelType) &&
                 releaseDate.equals(model.releaseDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, releaseDate);
+        return Objects.hash(modelId, modelName, modelType, releaseDate);
     }
 
     @Override
     public String toString() {
         return "HardwareModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
+                "modelId=" + modelId +
+                ", modelName='" + modelName + '\'' +
+                ", modelType='" + modelType + '\'' +
                 ", releaseDate=" + releaseDate +
                 '}';
     }

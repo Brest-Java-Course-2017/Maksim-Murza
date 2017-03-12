@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS types;
+DROP TABLE IF EXISTS models;
+
+CREATE TABLE types (
+  type_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  type_name VARCHAR(255) NOT NULL,
+  quantity INT
+);
+
+CREATE TABLE models (
+  model_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  model_name VARCHAR(255) NOT NULL,
+  model_type VARCHAR(255) NOT NULL,
+  release_date DATE
+);

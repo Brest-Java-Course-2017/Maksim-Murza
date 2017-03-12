@@ -7,8 +7,8 @@ import java.util.Objects;
  */
 public class HardwareType {
 
-    private Integer id;
-    private String name;
+    private Integer typeId;
+    private String typeName;
     private Integer quantity;
 
 
@@ -16,26 +16,26 @@ public class HardwareType {
 
     }
 
-    public HardwareType(Integer id, String name, Integer quantity) {
-        this.id = id;
-        this.name = name;
+    public HardwareType(Integer typeId, String typeName, Integer quantity) {
+        this.typeId = typeId;
+        this.typeName = typeName;
         this.quantity = quantity;
     }
 
-    public String getName() {
-        return name;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getTypeId() {
+        return typeId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
     }
 
     public Integer getQuantity() {
@@ -52,21 +52,21 @@ public class HardwareType {
         if (o == null || getClass() != o.getClass()) return false;
         HardwareType type = (HardwareType) o;
 
-        return id.equals(type.id) &&
-                name.equals(type.name) &&
+        return typeId.equals(type.typeId) &&
+                typeName.equals(type.typeName) &&
                 quantity.equals(type.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, quantity);
+        return Objects.hash(typeId, typeName, quantity);
     }
 
     @Override
     public String toString() {
         return "HardwareType{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "typeId=" + typeId +
+                ", typeName='" + typeName + '\'' +
                 ", quantity=" + quantity +
                 '}';
     }

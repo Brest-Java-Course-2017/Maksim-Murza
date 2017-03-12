@@ -28,10 +28,10 @@ public interface HardwareTypeDao {
     /**
      * Get type by name.
      *
-     * @param name type name.
+     * @param typeName type name.
      * @return type.
      */
-    Type getTypeByName(String name) throws DataAccessException;
+    Type getTypeByName(String typeName) throws DataAccessException;
 
     /**
      * Get quantity of models, which are belong to selected type.
@@ -47,7 +47,7 @@ public interface HardwareTypeDao {
      * @param type
      * @return id.
      */
-    int addType(Type type) throws DataAccessException;
+    int addType(HardwareType type) throws DataAccessException;
 
     /**
      * Update type.
@@ -55,7 +55,7 @@ public interface HardwareTypeDao {
      * @param type
      * @return id.
      */
-    int updateType(Type type) throws DataAccessException;
+    int updateType(HardwareType type) throws DataAccessException;
 
     /**
      * Delete type.
@@ -63,5 +63,5 @@ public interface HardwareTypeDao {
      * @param type
      * @return id.
      */
-    int deleteType(Type type) throws DataAccessException;
+    int deleteType(HardwareType type) throws DataAccessException;
 }

@@ -15,6 +15,7 @@
         <module>model</module>
         <module>dao-jdbc</module>
         <module>dao-api</module>
+        <module>database</module>
     </modules>
 
     <properties>
