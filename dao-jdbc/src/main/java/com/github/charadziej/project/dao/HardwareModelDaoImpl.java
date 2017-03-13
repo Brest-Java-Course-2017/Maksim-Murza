@@ -1,6 +1,7 @@
 package com.github.charadziej.project.dao;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,6 +25,21 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
     private static final String MODEL_NAME = "model_name";
     private static final String MODEL_TYPE = "model_type";
     private static final String RELEASE_DATE = "release_date";
+
+    @Value("${model.select}")
+    String getAllModelsSql;
+    @Value("${model.selectById}")
+    String getModelById;
+    @Value("${model.selectByName}")
+    String getModelByName;
+    @Value("${model.insert}")
+    String insertModelSql;
+    @Value("${model.update}")
+    String updateModelSql;
+    @Value("${model.delete}")
+    String deleteModelSql;
+    @Value("${model.sort}")
+    String sortModelSql;
 
     public HardwareModelDaoImpl(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);

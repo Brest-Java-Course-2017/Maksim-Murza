@@ -11,9 +11,13 @@ public class HardwareType {
     private String typeName;
     private Integer quantity;
 
-
     public HardwareType() {
 
+    }
+
+    public HardwareType(Integer typeId, String typeName) {
+        this.typeId = typeId;
+        this.typeName = typeName;
     }
 
     public HardwareType(Integer typeId, String typeName, Integer quantity) {
