@@ -15,8 +15,7 @@ public class HardwareType {
 
     }
 
-    public HardwareType(Integer typeId, String typeName) {
-        this.typeId = typeId;
+    public HardwareType(String typeName) {
         this.typeName = typeName;
     }
 

@@ -1,12 +1,19 @@
 package com.github.charadziej.project.dao;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
 
 /**
  * Tests for HardwareModelDaoImpl
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath*:spring-dao.xml"})
+@Transactional
 public class HardwareModelDaoImplTest {
     @Test
     public void getAllModels() throws Exception {

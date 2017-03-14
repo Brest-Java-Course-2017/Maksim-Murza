@@ -47,7 +47,8 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
     }
 
     public List<HardwareModel> getAllModels() throws DataAccessException {
-        return null;
+        List<HardwareModel> modelsList = jdbcTemplate.query(getAllModelsSql, new HardwareModelRowMapper());
+        return modelsList;
     }
 
     public HardwareModel getModelById(Integer modelId) throws DataAccessException {

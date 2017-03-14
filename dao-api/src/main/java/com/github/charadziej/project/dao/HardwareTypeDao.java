@@ -52,8 +52,8 @@ public interface HardwareTypeDao {
     /**
      * Delete type.
      *
-     * @param type
-     * @return id.
+     * @param typeId
+     *
      */
-    int deleteType(HardwareType type) throws DataAccessException;
+    void deleteType(Integer typeId) throws DataAccessException;
 }
