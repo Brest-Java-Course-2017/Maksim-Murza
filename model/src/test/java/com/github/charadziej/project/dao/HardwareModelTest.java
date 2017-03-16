@@ -3,6 +3,7 @@ package com.github.charadziej.project.dao;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -13,8 +14,8 @@ public class HardwareModelTest {
 
     private static final Integer MODEL_ID = 1;
     private static final String MODEL_NAME = "Intel core i5";
-    private static final String MODEL_TYPE = "CPU";
-    private static final Date RELEASE_DATE = new Date(2015, 11, 10); //Date(int year, int month, int date)
+    private static final String MODEL_TYPE_NAME = "CPU";
+    private static final LocalDate RELEASE_DATE = LocalDate.parse("2016-12-11");
 
     HardwareModel model = new HardwareModel();
 
@@ -32,8 +33,8 @@ public class HardwareModelTest {
 
     @Test
     public void getType() throws Exception {
-        model.setModelType(MODEL_TYPE);
-        Assert.assertEquals("check model's type: ", MODEL_TYPE, model.getModelType());
+        model.setModelType(MODEL_TYPE_NAME);
+        Assert.assertEquals("check model's type: ", MODEL_TYPE_NAME, model.getModelType());
     }
 
     @Test

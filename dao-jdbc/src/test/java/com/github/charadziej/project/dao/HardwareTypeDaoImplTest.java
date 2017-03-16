@@ -56,7 +56,7 @@ public class HardwareTypeDaoImplTest {
         Integer key = hardwareTypeDao.addType(newType);
 
         Assert.assertEquals(quantityBefore + 1, hardwareTypeDao.getAllTypes().size());
-        Assert.assertNotNull(hardwareTypeDao.getTypeById(quantityBefore + 1));
+        Assert.assertNotNull(hardwareTypeDao.getTypeById(key));
         Assert.assertEquals("Check new type's name", newType.getTypeName(),
                 hardwareTypeDao.getTypeById(key).getTypeName());
     }

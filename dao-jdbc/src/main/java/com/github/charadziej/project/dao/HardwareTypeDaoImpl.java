@@ -61,7 +61,6 @@ public class HardwareTypeDaoImpl implements HardwareTypeDao {
             return null;
         }
         return type;
-
     }
 
     public HardwareType getTypeByName(String typeName) throws DataAccessException {

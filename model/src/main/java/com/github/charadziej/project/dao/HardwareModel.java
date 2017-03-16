@@ -1,5 +1,6 @@
 package com.github.charadziej.project.dao;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,14 +12,20 @@ public class HardwareModel {
     private Integer modelId;
     private String modelName;
     private String modelType;
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
     public HardwareModel() {
 
     }
 
-    public HardwareModel(int modelId, String modelName, String modelType, Date releaseDate) {
+    public HardwareModel(int modelId, String modelName, String modelType, LocalDate releaseDate) {
         this.modelId = (Integer) modelId;
+        this.modelName = modelName;
+        this.modelType = modelType;
+        this.releaseDate = releaseDate;
+    }
+
+    public HardwareModel(String modelName, String modelType, LocalDate releaseDate) {
         this.modelName = modelName;
         this.modelType = modelType;
         this.releaseDate = releaseDate;
@@ -48,11 +55,11 @@ public class HardwareModel {
         this.modelType = modelType;
     }
 
-    public Date getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
