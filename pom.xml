@@ -16,6 +16,8 @@
         <module>dao-jdbc</module>
         <module>dao-api</module>
         <module>database</module>
+        <module>service</module>
+        <module>service-api</module>
     </modules>
 
     <properties>
@@ -73,6 +75,21 @@
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-jcl</artifactId>
                 <version>${log4j2.version}</version>
             </dependency>
         </dependencies>

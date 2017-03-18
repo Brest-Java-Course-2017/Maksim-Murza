@@ -1,6 +1,8 @@
 package com.github.charadziej.project.dao;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -24,12 +26,13 @@ import java.util.List;
  */
 public class HardwareModelDaoImpl implements HardwareModelDao {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private static final String MODEL_ID = "model_id";
     private static final String MODEL_NAME = "model_name";
-    private static final String MODEL_TYPE = "model_type";
     private static final String MODEL_TYPE_NAME = "model_type_name";
     private static final String RELEASE_DATE = "release_date";
 
@@ -54,11 +57,13 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
     }
 
     public List<HardwareModel> getAllModels() throws DataAccessException {
+        LOGGER.debug("getAllModels()");
         List<HardwareModel> modelsList = jdbcTemplate.query(getAllModelsSql, new HardwareModelRowMapper());
         return modelsList;
     }
 
     public HardwareModel getModelById(Integer modelId) throws DataAccessException {
+        LOGGER.debug("getModelById({})", modelId);
         HardwareModel model;
         try {
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_model_id", modelId);
@@ -71,6 +76,7 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
     }
 
     public HardwareModel getModelByName(String modelName) throws DataAccessException {
+        LOGGER.debug("getModelByName({})", modelName);
         HardwareModel model;
         try {
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_model_name", modelName);
@@ -83,6 +89,7 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
     }
 
     public int addModel(HardwareModel model) throws DataAccessException {
+        LOGGER.debug("addModel({})", model);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         sqlParameterSource.addValue("p_model_name", model.getModelName());
@@ -93,6 +100,7 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
     }
 
     public int updateModel(HardwareModel model) throws DataAccessException {
+        LOGGER.debug("updateModel({})", model);
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         sqlParameterSource.addValue("p_model_id", model.getModelId());
         sqlParameterSource.addValue("p_model_name", model.getModelName());
@@ -102,11 +110,13 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
     }
 
     public void deleteModel(Integer modelId) throws DataAccessException {
+        LOGGER.debug("deleteModel({})", modelId);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_model_id", modelId);
         namedParameterJdbcTemplate.update(deleteModelSql, sqlParameterSource);
     }
 
     public List<HardwareModel> getModelsByPeriod(LocalDate begin, LocalDate end) throws DataAccessException {
+        LOGGER.debug("getModelsByPeriod({},{})", begin, end);
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         sqlParameterSource.addValue("p_begin", begin);
         sqlParameterSource.addValue("p_end", end);
