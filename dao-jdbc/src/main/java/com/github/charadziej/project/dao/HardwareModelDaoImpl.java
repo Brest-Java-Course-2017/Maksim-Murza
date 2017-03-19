@@ -36,8 +36,10 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
     private static final String MODEL_TYPE_NAME = "model_type_name";
     private static final String RELEASE_DATE = "release_date";
 
-    @Value("${model.select}")
+    @Value("${models.select}")
     String getAllModelsSql;
+    @Value("${models.quantity}")
+    String getModelsQuantitySql;
     @Value("${model.selectById}")
     String getModelByIdSql;
     @Value("${model.selectByName}")
@@ -56,14 +58,22 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
+    @Override
+    public int getModelsQuantity() throws DataAccessException {
+        LOGGER.debug("getModelsQuantity() in dao");
+        return jdbcTemplate.queryForObject(getModelsQuantitySql, Integer.class);
+    }
+
+    @Override
     public List<HardwareModel> getAllModels() throws DataAccessException {
-        LOGGER.debug("getAllModels()");
+        LOGGER.debug("getAllModels() in dao");
         List<HardwareModel> modelsList = jdbcTemplate.query(getAllModelsSql, new HardwareModelRowMapper());
         return modelsList;
     }
 
+    @Override
     public HardwareModel getModelById(Integer modelId) throws DataAccessException {
-        LOGGER.debug("getModelById({})", modelId);
+        LOGGER.debug("getModelById({}) in dao", modelId);
         HardwareModel model;
         try {
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_model_id", modelId);
@@ -75,8 +85,9 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
         return model;
     }
 
+    @Override
     public HardwareModel getModelByName(String modelName) throws DataAccessException {
-        LOGGER.debug("getModelByName({})", modelName);
+        LOGGER.debug("getModelByName({}) in dao", modelName);
         HardwareModel model;
         try {
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_model_name", modelName);
@@ -88,8 +99,9 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
         return model;
     }
 
+    @Override
     public int addModel(HardwareModel model) throws DataAccessException {
-        LOGGER.debug("addModel({})", model);
+        LOGGER.debug("addModel({}) in dao", model);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         sqlParameterSource.addValue("p_model_name", model.getModelName());
@@ -99,8 +111,9 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
         return keyHolder.getKey().intValue();
     }
 
+    @Override
     public int updateModel(HardwareModel model) throws DataAccessException {
-        LOGGER.debug("updateModel({})", model);
+        LOGGER.debug("updateModel({}) in dao", model);
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         sqlParameterSource.addValue("p_model_id", model.getModelId());
         sqlParameterSource.addValue("p_model_name", model.getModelName());
@@ -109,14 +122,16 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
         return namedParameterJdbcTemplate.update(updateModelSql, sqlParameterSource);
     }
 
-    public void deleteModel(Integer modelId) throws DataAccessException {
-        LOGGER.debug("deleteModel({})", modelId);
+    @Override
+    public int deleteModel(Integer modelId) throws DataAccessException {
+        LOGGER.debug("deleteModel({}) in dao", modelId);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_model_id", modelId);
-        namedParameterJdbcTemplate.update(deleteModelSql, sqlParameterSource);
+        return namedParameterJdbcTemplate.update(deleteModelSql, sqlParameterSource);
     }
 
+    @Override
     public List<HardwareModel> getModelsByPeriod(LocalDate begin, LocalDate end) throws DataAccessException {
-        LOGGER.debug("getModelsByPeriod({},{})", begin, end);
+        LOGGER.debug("getModelsByPeriod({},{}) in dao", begin, end);
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         sqlParameterSource.addValue("p_begin", begin);
         sqlParameterSource.addValue("p_end", end);

@@ -53,7 +53,7 @@ public interface HardwareTypeService {
      * Delete type.
      *
      * @param typeId
-     *
+     * @return effectedRowsNumber
      */
-    void deleteType(Integer typeId) throws DataAccessException;
+    int deleteType(Integer typeId) throws DataAccessException;
 }

@@ -1,8 +1,13 @@
 package com.github.charadziej.project.service;
 
 import com.github.charadziej.project.dao.HardwareType;
+import com.github.charadziej.project.dao.HardwareTypeDao;
 import com.github.charadziej.project.service.HardwareTypeService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -11,33 +16,75 @@ import java.util.List;
  */
 public class HardwareTypeServiceImpl implements HardwareTypeService {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    @Autowired
+    HardwareTypeDao hardwareTypeDao;
+
+    public void setHardwareTypeDao(HardwareTypeDao hardwareTypeDao) {
+        this.hardwareTypeDao = hardwareTypeDao;
+    }
+
     @Override
     public List<HardwareType> getAllTypes() throws DataAccessException {
-        return null;
+        LOGGER.debug("getAllTypes() in service");
+        return hardwareTypeDao.getAllTypes();
     }
 
     @Override
     public HardwareType getTypeById(Integer typeId) throws DataAccessException {
-        return null;
+        LOGGER.debug("getTypeById({}) in service", typeId);
+        Assert.notNull(typeId, "Parameter typeId shouldn't be null");
+        HardwareType type = hardwareTypeDao.getTypeById(typeId);
+        return type;
     }
 
     @Override
     public HardwareType getTypeByName(String typeName) throws DataAccessException {
-        return null;
+        LOGGER.debug("getTypeByName({}) in service", typeName);
+        Assert.hasText(typeName, "Parameter typeName shouldn't be empty");
+        HardwareType type = hardwareTypeDao.getTypeByName(typeName);
+        return type;
     }
 
     @Override
     public int addType(HardwareType type) throws DataAccessException {
-        return 0;
+        Assert.notNull(type);
+        LOGGER.debug("addType({}) in service", type);
+        Assert.hasText(type.getTypeName(), "Parameter typeName shouldn't be empty");
+
+        if (hardwareTypeDao.getTypeByName(type.getTypeName()) != null) {
+            throw new IllegalArgumentException("Object with such name is already exist");
+        }
+
+        return hardwareTypeDao.addType(type);
     }
 
     @Override
     public int updateType(HardwareType type) throws DataAccessException {
-        return 0;
+        Assert.notNull(type);
+        LOGGER.debug("updateType({}) in service", type);
+
+        Assert.notNull(type.getTypeId(), "Parameter typeId shouldn't be empty");
+        Assert.hasText(type.getTypeName(), "Parameter typeName shouldn't be empty");
+
+        if (hardwareTypeDao.getTypeById(type.getTypeId()) == null) {
+            throw new IllegalArgumentException("There are no object with such id");
+        }
+
+        if (hardwareTypeDao.getTypeByName(type.getTypeName()) != null &&
+                hardwareTypeDao.getTypeByName(type.getTypeName()).getTypeId() != type.getTypeId()) {
+            throw new IllegalArgumentException("Object with such name is already exist");
+        }
+
+        return hardwareTypeDao.updateType(type);
     }
 
     @Override
-    public void deleteType(Integer typeId) throws DataAccessException {
-
+    public int deleteType(Integer typeId) throws DataAccessException {
+        Assert.notNull(typeId);
+        LOGGER.debug("deleteType({}) in service", typeId);
+        Assert.notNull(hardwareTypeDao.getTypeById(typeId), "Trying to delete nonexistent object");
+        return hardwareTypeDao.deleteType(typeId);
     }
 }

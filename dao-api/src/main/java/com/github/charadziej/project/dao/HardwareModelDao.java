@@ -19,6 +19,13 @@ public interface HardwareModelDao {
     List<HardwareModel> getAllModels() throws DataAccessException;
 
     /**
+     * Get models quantity.
+     *
+     * @return quantity
+     */
+    int getModelsQuantity() throws DataAccessException;
+
+    /**
      * Get model by id.
      *
      * @param modelId type identifier.
@@ -54,9 +61,9 @@ public interface HardwareModelDao {
      * Delete model.
      *
      * @param modelId
-     *
+     * @return effectedRowsNumber
      */
-    void deleteModel(Integer modelId) throws DataAccessException;
+    int deleteModel(Integer modelId) throws DataAccessException;
 
     /**
      * Sort model.

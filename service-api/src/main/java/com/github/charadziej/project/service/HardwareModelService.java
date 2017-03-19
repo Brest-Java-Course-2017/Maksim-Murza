@@ -54,9 +54,9 @@ public interface HardwareModelService {
      * Delete model.
      *
      * @param modelId
-     *
+     * @return effectedRowsNumber
      */
-    void deleteModel(Integer modelId) throws DataAccessException;
+    int deleteModel(Integer modelId) throws DataAccessException;
 
     /**
      * Sort model.

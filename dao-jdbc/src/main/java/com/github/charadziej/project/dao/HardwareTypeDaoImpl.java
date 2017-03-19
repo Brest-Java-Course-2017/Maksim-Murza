@@ -1,5 +1,7 @@
 package com.github.charadziej.project.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,6 +23,8 @@ import java.util.List;
  */
 public class HardwareTypeDaoImpl implements HardwareTypeDao {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -28,8 +32,10 @@ public class HardwareTypeDaoImpl implements HardwareTypeDao {
     private static final String TYPE_NAME = "type_name";
     private static final String QUANTITY = "quantity";
 
-    @Value("${type.select}")
+    @Value("${types.select}")
     String getAllTypesSql;
+    @Value("${types.quantity}")
+    String getTypesQuantitySql;
     @Value("${type.selectById}")
     String getTypeById;
     @Value("${type.selectByName}")
@@ -46,12 +52,22 @@ public class HardwareTypeDaoImpl implements HardwareTypeDao {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
+    @Override
+    public int getTypesQuantity() throws DataAccessException {
+        LOGGER.debug("getTypesQuantity() in dao");
+        return jdbcTemplate.queryForObject(getTypesQuantitySql, Integer.class);
+    }
+
+    @Override
     public List<HardwareType> getAllTypes() throws DataAccessException {
+        LOGGER.debug("getAllTypes() in dao");
         List<HardwareType> typesList = jdbcTemplate.query(getAllTypesSql, new HardwareTypeRowMapper());
         return typesList;
     }
 
+    @Override
     public HardwareType getTypeById(Integer typeId) throws DataAccessException {
+        LOGGER.debug("getTypeById({}) in dao", typeId);
         HardwareType type;
         try {
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_type_id", typeId);
@@ -63,7 +79,9 @@ public class HardwareTypeDaoImpl implements HardwareTypeDao {
         return type;
     }
 
+    @Override
     public HardwareType getTypeByName(String typeName) throws DataAccessException {
+        LOGGER.debug("getTypeByName({}) in dao", typeName);
         HardwareType type;
         try {
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_type_name", typeName);
@@ -75,23 +93,29 @@ public class HardwareTypeDaoImpl implements HardwareTypeDao {
         return type;
     }
 
+    @Override
     public int addType(HardwareType type) throws DataAccessException {
+        LOGGER.debug("addType({}) in dao", type);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_type_name", type.getTypeName());
         namedParameterJdbcTemplate.update(insertTypeSql, sqlParameterSource, keyHolder);
         return keyHolder.getKey().intValue();
     }
 
+    @Override
     public int updateType(HardwareType type) throws DataAccessException {
+        LOGGER.debug("updateType({}) in dao", type);
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         sqlParameterSource.addValue("p_type_id", type.getTypeId());
         sqlParameterSource.addValue("p_type_name", type.getTypeName());
         return namedParameterJdbcTemplate.update(updateTypeSql, sqlParameterSource);
     }
 
-    public void deleteType(Integer typeId) throws DataAccessException {
+    @Override
+    public int deleteType(Integer typeId) throws DataAccessException {
+        LOGGER.debug("deleteType({}) in dao", typeId);
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_type_id", typeId);
-        namedParameterJdbcTemplate.update(deleteTypeSql, sqlParameterSource);
+        return namedParameterJdbcTemplate.update(deleteTypeSql, sqlParameterSource);
     }
 
     private class HardwareTypeRowMapper implements RowMapper<HardwareType> {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="hardwareModelDao" class="org.easymock.EasyMock" factory-method="createMock">
+        <constructor-arg value="com.github.charadziej.project.dao.HardwareModelDao"/>
+    </bean>
+
+    <bean id="hardwareTypeDao" class="org.easymock.EasyMock" factory-method="createMock">
+        <constructor-arg value="com.github.charadziej.project.dao.HardwareTypeDao"/>
+    </bean>
+
+    <bean id="hardwareModelServiceDao" class="com.github.charadziej.project.service.HardwareModelServiceImpl">
+        <property name="hardwareModelDao" ref="hardwareModelDao"/>
+    </bean>
+
+    <bean id="hardwareTypeServiceDao" class="com.github.charadziej.project.service.HardwareTypeServiceImpl">
+        <property name="hardwareTypeDao" ref="hardwareTypeDao"/>
+    </bean>
+
+</beans>

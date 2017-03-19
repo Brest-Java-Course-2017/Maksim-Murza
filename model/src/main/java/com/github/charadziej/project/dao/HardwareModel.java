@@ -18,8 +18,8 @@ public class HardwareModel {
 
     }
 
-    public HardwareModel(int modelId, String modelName, String modelType, LocalDate releaseDate) {
-        this.modelId = (Integer) modelId;
+    public HardwareModel(Integer modelId, String modelName, String modelType, LocalDate releaseDate) {
+        this.modelId = modelId;
         this.modelName = modelName;
         this.modelType = modelType;
         this.releaseDate = releaseDate;

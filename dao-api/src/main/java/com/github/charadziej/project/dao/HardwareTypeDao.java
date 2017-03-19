@@ -17,6 +17,13 @@ public interface HardwareTypeDao {
     List<HardwareType> getAllTypes() throws DataAccessException;
 
     /**
+     * Get types quantity.
+     *
+     * @return quantity
+     */
+    int getTypesQuantity() throws DataAccessException;
+
+    /**
      * Get type by id.
      *
      * @param typeId type identifier.
@@ -53,7 +60,7 @@ public interface HardwareTypeDao {
      * Delete type.
      *
      * @param typeId
-     *
+     * @return effectedRowsNumber
      */
-    void deleteType(Integer typeId) throws DataAccessException;
+    int deleteType(Integer typeId) throws DataAccessException;
 }

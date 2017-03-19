@@ -40,9 +40,16 @@ public class HardwareModelDaoImplTest {
     HardwareModelDao hardwareModelDao;
 
     @Test
+    public void getModelsQuantity() throws Exception {
+        int quantity = hardwareModelDao.getModelsQuantity();
+        LOGGER.debug("test getModelsQuantity() in dao; Returned int: {}", quantity);
+        Assert.assertEquals("Check models quantity", 5, quantity);
+    }
+
+    @Test
     public void getAllModels() throws Exception {
         List<HardwareModel> modelsList = hardwareModelDao.getAllModels();
-        LOGGER.debug("test getAllModels(); Returned list: {}", modelsList);
+        LOGGER.debug("test getAllModels() in dao; Returned list: {}", modelsList);
         Assert.assertTrue("Check quantity of models", modelsList.size() > 0);
         Assert.assertEquals("Check model's name","GTX Titan", modelsList.get(2).getModelName());
         Assert.assertEquals("Check model's type", "CPU", modelsList.get(0).getModelType());
@@ -51,14 +58,14 @@ public class HardwareModelDaoImplTest {
     @Test
     public void getModelById() throws Exception {
         HardwareModel model = hardwareModelDao.getModelById(MODEL_ID);
-        LOGGER.debug("test getModelById(); Returned object: {}", model);
+        LOGGER.debug("test getModelById() in dao; Returned object: {}", model);
         Assert.assertEquals("Check id", MODEL_ID, model.getModelId());
     }
 
     @Test
     public void getModelByName() throws Exception {
         HardwareModel model = hardwareModelDao.getModelByName(MODEL_NAME);
-        LOGGER.debug("test getModelById(); Returned object: {}", model);
+        LOGGER.debug("test getModelById() in dao; Returned object: {}", model);
         Assert.assertEquals("Check name", MODEL_NAME, model.getModelName());
     }
 
@@ -66,7 +73,7 @@ public class HardwareModelDaoImplTest {
     public void addModel() throws Exception {
         Integer quantityBefore = hardwareModelDao.getAllModels().size();
         Integer key = hardwareModelDao.addModel(newModel);
-        LOGGER.debug("test addModel(); Returned key: {}", key);
+        LOGGER.debug("test addModel() in dao; Returned key: {}", key);
 
         Assert.assertEquals(quantityBefore + 1, hardwareModelDao.getAllModels().size());
         Assert.assertNotNull(hardwareModelDao.getModelById(key));
@@ -80,7 +87,7 @@ public class HardwareModelDaoImplTest {
         model.setModelName(NEW_MODEL_NAME);
         model.setModelType(NEW_MODEL_TYPE_NAME);
         model.setReleaseDate(NEW_RELEASE_DATE);
-        LOGGER.debug("test updateModel(); Object: {}", model);
+        LOGGER.debug("test updateModel() in dao; Object: {}", model);
 
         Integer effectedRowQuantity = hardwareModelDao.updateModel(model);
         System.out.println(hardwareModelDao.getModelById(5));
@@ -99,7 +106,7 @@ public class HardwareModelDaoImplTest {
                 hardwareModelDao.getModelById(key).getModelName());
 
         hardwareModelDao.deleteModel(key);
-        LOGGER.debug("test deleteModel(); Deleted object with key: {}", key);
+        LOGGER.debug("test deleteModel() in dao; Deleted object with key: {}", key);
 
         Assert.assertEquals(quantityBefore, (Integer) hardwareModelDao.getAllModels().size());
         Assert.assertNull(hardwareModelDao.getModelById(key));
@@ -112,7 +119,7 @@ public class HardwareModelDaoImplTest {
         boolean less = false, more = false;
 
         List<HardwareModel> modelsByPeriodList = hardwareModelDao.getModelsByPeriod(begin, end);
-        LOGGER.debug("test getModelsByPeriod(); Returned list: {}", modelsByPeriodList);
+        LOGGER.debug("test getModelsByPeriod() in dao; Returned list: {}", modelsByPeriodList);
 
         for(int i = 0; i < modelsByPeriodList.size(); i++) {
             if(modelsByPeriodList.get(i).getReleaseDate().compareTo(begin) == 1)
