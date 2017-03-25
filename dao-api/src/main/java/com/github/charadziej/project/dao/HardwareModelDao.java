@@ -14,7 +14,7 @@ public interface HardwareModelDao {
     /**
      * Get all models list.
      *
-     * @return all models list
+     * @return all
      */
     List<HardwareModel> getAllModels() throws DataAccessException;
 
@@ -69,7 +69,7 @@ public interface HardwareModelDao {
      * Sort model.
      *
      * @param begin, end
-     * @return
+     * @return models list
      */
     List<HardwareModel> getModelsByPeriod(LocalDate begin, LocalDate end) throws DataAccessException;
 }

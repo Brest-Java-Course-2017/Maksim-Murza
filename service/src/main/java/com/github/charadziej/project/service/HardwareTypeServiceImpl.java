@@ -1,5 +1,7 @@
 package com.github.charadziej.project.service;
 
+import com.github.charadziej.project.dao.HardwareModel;
+import com.github.charadziej.project.dao.HardwareModelDao;
 import com.github.charadziej.project.dao.HardwareType;
 import com.github.charadziej.project.dao.HardwareTypeDao;
 import com.github.charadziej.project.service.HardwareTypeService;
@@ -20,6 +22,9 @@ public class HardwareTypeServiceImpl implements HardwareTypeService {
 
     @Autowired
     HardwareTypeDao hardwareTypeDao;
+
+    @Autowired
+    HardwareModelDao hardwareModelDao;
 
     public void setHardwareTypeDao(HardwareTypeDao hardwareTypeDao) {
         this.hardwareTypeDao = hardwareTypeDao;
@@ -83,6 +88,15 @@ public class HardwareTypeServiceImpl implements HardwareTypeService {
     @Override
     public int deleteType(Integer typeId) throws DataAccessException {
         Assert.notNull(typeId);
+        String typeName = hardwareTypeDao.getTypeById(typeId).getTypeName();
+        List<HardwareModel> modelsList = hardwareModelDao.getAllModels();
+
+        for(int i = 0; i < modelsList.size(); i++) {
+            if (modelsList.get(i).getModelType() == typeName) {
+                throw new IllegalArgumentException("Trying to delete type, which has models");
+            }
+        }
+
         LOGGER.debug("deleteType({}) in service", typeId);
         Assert.notNull(hardwareTypeDao.getTypeById(typeId), "Trying to delete nonexistent object");
         return hardwareTypeDao.deleteType(typeId);

@@ -1,8 +1,6 @@
 package com.github.charadziej.project.service;
 
-import com.github.charadziej.project.dao.HardwareModel;
-import com.github.charadziej.project.dao.HardwareModelDao;
-import com.github.charadziej.project.dao.HardwareTypeDao;
+import com.github.charadziej.project.dao.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,7 @@
 package com.github.charadziej.project.dao;
 
 import com.sun.org.apache.xpath.internal.SourceTree;
+import com.github.charadziej.project.dao.HardwareType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
@@ -29,7 +30,7 @@ public class HardwareTypeDaoImplTest {
     private final Integer TYPE_ID = 4;
     private final String TYPE_NAME = "CPU";
     private final String NEW_TYPE_NAME = "Random access memory";
-    HardwareType newType = new HardwareType("Cooler");
+    private static final HardwareType newType = new HardwareType("Cooler");
 
     @Autowired
     HardwareTypeDao hardwareTypeDao;

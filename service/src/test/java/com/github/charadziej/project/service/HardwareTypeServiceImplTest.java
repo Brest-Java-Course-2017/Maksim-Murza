@@ -6,6 +6,7 @@ import com.github.charadziej.project.dao.HardwareTypeDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,6 +175,7 @@ public class HardwareTypeServiceImplTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    @Ignore
     public void deleteNotExistedType() throws Exception {
         LOGGER.debug("test deleteNotExistedType() in service");
         Integer rowsEffectedQuantity = hardwareTypeService.deleteType(200);

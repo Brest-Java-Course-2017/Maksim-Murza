@@ -12,11 +12,11 @@
         <constructor-arg value="com.github.charadziej.project.dao.HardwareTypeDao"/>
     </bean>
 
-    <bean id="hardwareModelServiceDao" class="com.github.charadziej.project.service.HardwareModelServiceImpl">
+    <bean id="hardwareModelService" class="com.github.charadziej.project.service.HardwareModelServiceImpl">
         <property name="hardwareModelDao" ref="hardwareModelDao"/>
     </bean>
 
-    <bean id="hardwareTypeServiceDao" class="com.github.charadziej.project.service.HardwareTypeServiceImpl">
+    <bean id="hardwareTypeService" class="com.github.charadziej.project.service.HardwareTypeServiceImpl">
         <property name="hardwareTypeDao" ref="hardwareTypeDao"/>
     </bean>
 
