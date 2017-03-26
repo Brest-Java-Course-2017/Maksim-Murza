@@ -104,7 +104,9 @@ public class HardwareModelServiceImpl implements HardwareModelService {
     @Override
     public List<HardwareModel> getModelsByPeriod(LocalDate begin, LocalDate end) throws DataAccessException {
         LOGGER.debug("getModelsByPeriod() in service");
-        Assert.isTrue(begin.compareTo(end) == -1);
+        Assert.notNull(begin);
+        Assert.notNull(end);
+        Assert.isTrue(begin.compareTo(end) < 0);
         return hardwareModelDao.getModelsByPeriod(begin, end);
     }
 }

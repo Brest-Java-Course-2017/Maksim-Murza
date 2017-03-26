@@ -28,14 +28,14 @@ public class HardwareModelServiceImplTest {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private final Integer MODEL_ID = 2;
-    private final String MODEL_NAME = "ASUS";
-    private final String NEW_MODEL_NAME = "Name";
+    private final String MODEL_NAME = "Intel Core 2 Duo E8400";
+    private final String NEW_MODEL_NAME = "TestName";
     private final String NEW_MODEL_TYPE_NAME = "CPU";
     private final String BEGIN_DATE = "2013-08-10";
-    private final String END_DATE = "2014-12-01";
-    private final LocalDate NEW_RELEASE_DATE = LocalDate.parse("2000-09-09");
+    private final String END_DATE = "2016-12-01";
+    private final LocalDate NEW_RELEASE_DATE = LocalDate.parse("2014-09-09");
 
-    HardwareModel newModel = new HardwareModel("Intel", "CPU",
+    HardwareModel newModel = new HardwareModel(NEW_MODEL_NAME, NEW_MODEL_TYPE_NAME,
             LocalDate.parse("2012-11-03"));
 
     @Autowired
@@ -242,6 +242,7 @@ public class HardwareModelServiceImplTest {
     @Test
     public void getModelsByPeriod() throws Exception {
         List<HardwareModel> modelsList = hardwareModelService.getModelsByPeriod(LocalDate.parse(BEGIN_DATE), LocalDate.parse(END_DATE));
+        Assert.assertNotNull(modelsList);
         LOGGER.debug("test getModelsByPeriod() in service; Returned list: {}", modelsList);
     }
 

@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.IntrospectionException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -27,10 +28,14 @@ public class HardwareTypeDaoImplTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    private final int QUANTITY = 8;
+    private final Integer FIRST_TYPE_QUANTITY = 7;
     private final Integer TYPE_ID = 4;
+    private final String THIRD_TYPE_NAME = "Motherboard";
     private final String TYPE_NAME = "CPU";
-    private final String NEW_TYPE_NAME = "Random access memory";
-    private static final HardwareType newType = new HardwareType("Cooler");
+    private final String NEW_TYPE_NAME = "Monitor";
+
+    private final HardwareType newType = new HardwareType(NEW_TYPE_NAME);
 
     @Autowired
     HardwareTypeDao hardwareTypeDao;
@@ -39,7 +44,7 @@ public class HardwareTypeDaoImplTest {
     public void getTypesQuantity() throws Exception {
         int quantity = hardwareTypeDao.getTypesQuantity();
         LOGGER.debug("test getModelsQuantity() in dao; Returned int: {}", quantity);
-        Assert.assertEquals("Check types quantity", 5, quantity);
+        Assert.assertEquals("Check types quantity", QUANTITY, quantity);
     }
 
     @Test
@@ -47,8 +52,8 @@ public class HardwareTypeDaoImplTest {
         List<HardwareType> typesList = hardwareTypeDao.getAllTypes();
         LOGGER.debug("test getAllTypes() in dao; Returned list: {}", typesList);
         Assert.assertTrue("Check quantity of types", typesList.size() > 0);
-        Assert.assertEquals("Check type's name","Motherboard",typesList.get(2).getTypeName());
-        Assert.assertEquals("Check type's quantity",(Integer) 2,typesList.get(0).getQuantity());
+        Assert.assertEquals("Check type's name",THIRD_TYPE_NAME,typesList.get(2).getTypeName());
+        Assert.assertEquals("Check type's quantity", FIRST_TYPE_QUANTITY, typesList.get(0).getQuantity());
     }
 
     @Test
@@ -103,5 +108,4 @@ public class HardwareTypeDaoImplTest {
         Assert.assertEquals(quantityBefore, (Integer) hardwareTypeDao.getAllTypes().size());
         Assert.assertNull(hardwareTypeDao.getTypeById(key));
     }
-
 }

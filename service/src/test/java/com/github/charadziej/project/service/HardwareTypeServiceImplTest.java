@@ -30,8 +30,7 @@ public class HardwareTypeServiceImplTest {
 
     private final Integer TYPE_ID = 4;
     private final String TYPE_NAME = "CPU";
-    private final String NEW_TYPE_NAME = "Random access memory";
-    HardwareType newType = new HardwareType("Cooler");
+    HardwareType newType = new HardwareType("Monitor");
 
     @Autowired
     HardwareTypeService hardwareTypeService;
@@ -175,10 +174,15 @@ public class HardwareTypeServiceImplTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    @Ignore
     public void deleteNotExistedType() throws Exception {
         LOGGER.debug("test deleteNotExistedType() in service");
         Integer rowsEffectedQuantity = hardwareTypeService.deleteType(200);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void deleteTypeWithModels() throws Exception {
+        LOGGER.debug("test deleteTypeWithModels() in service");
+        hardwareTypeService.deleteType(1);
     }
 
 }

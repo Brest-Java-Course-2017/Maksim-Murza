@@ -88,6 +88,7 @@ public class HardwareTypeServiceImpl implements HardwareTypeService {
     @Override
     public int deleteType(Integer typeId) throws DataAccessException {
         Assert.notNull(typeId);
+        Assert.notNull(hardwareTypeDao.getTypeById(typeId), "Trying to delete nonexistent object");
         String typeName = hardwareTypeDao.getTypeById(typeId).getTypeName();
         List<HardwareModel> modelsList = hardwareModelDao.getAllModels();
 
@@ -98,7 +99,6 @@ public class HardwareTypeServiceImpl implements HardwareTypeService {
         }
 
         LOGGER.debug("deleteType({}) in service", typeId);
-        Assert.notNull(hardwareTypeDao.getTypeById(typeId), "Trying to delete nonexistent object");
         return hardwareTypeDao.deleteType(typeId);
     }
 }

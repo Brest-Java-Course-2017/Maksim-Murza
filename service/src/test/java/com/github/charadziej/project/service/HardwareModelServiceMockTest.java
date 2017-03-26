@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.easymock.EasyMock.*;
@@ -48,9 +49,14 @@ public class HardwareModelServiceMockTest {
     }
 
     @Test
-    @Ignore
     public void getAllModels() throws Exception {
-
+        HardwareModel model1 = new HardwareModel(), model2 = new HardwareModel();
+        List<HardwareModel> list = new ArrayList<HardwareModel>();
+        list.add(model1);
+        list.add(model2);
+        expect(mockHardwareModelDao.getAllModels()).andReturn(list);
+        replay(mockHardwareModelDao);
+        Assert.assertEquals(list, hardwareModelService.getAllModels());
     }
 
     @Test
@@ -68,14 +74,32 @@ public class HardwareModelServiceMockTest {
     }
 
     @Test
-    @Ignore
     public void addModel() throws Exception {
         HardwareType type = new HardwareType("CPU");
-        expect(mockHardwareModelDao.addModel(newModel)).andReturn(6);
         expect(mockHardwareTypeDao.getTypeByName(newModel.getModelType())).andReturn(type);
         expect(mockHardwareModelDao.getModelByName(newModel.getModelName())).andReturn(null);
+        expect(mockHardwareModelDao.addModel(newModel)).andReturn(6);
         replay(mockHardwareModelDao);
+        replay(mockHardwareTypeDao);
         Assert.assertEquals(6, hardwareModelService.addModel(newModel));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    @Ignore
+    public void addModelWithDuplicateName() throws Exception {
+        HardwareModel model = new HardwareModel(newModel.getModelName(), "CPU", newModel.getReleaseDate());
+        HardwareType type = new HardwareType("CPU");
+        expect(mockHardwareTypeDao.getTypeByName(newModel.getModelType())).andReturn(type);
+        expect(mockHardwareModelDao.getModelByName(newModel.getModelName())).andReturn(model);
+        replay(mockHardwareModelDao);
+        replay(mockHardwareTypeDao);
+        Assert.assertEquals(6, hardwareModelService.addModel(newModel));
+    }
+
+    @Test
+    @Ignore
+    public void addModelWithWrongType() throws Exception {
+
     }
 
     @Test
@@ -87,6 +111,18 @@ public class HardwareModelServiceMockTest {
     @Test
     @Ignore
     public void deleteModel() throws Exception {
+
+    }
+
+    @Test
+    @Ignore
+    public void getModelsByPeriod() throws Exception {
+
+    }
+
+    @Test
+    @Ignore
+    public void getModelsByWrongPeriod() throws Exception {
 
     }
 }

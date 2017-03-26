@@ -25,15 +25,18 @@ public class HardwareModelDaoImplTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    private final int QUANTITY = 25;
     private final Integer MODEL_ID = 2;
-    private final String MODEL_NAME = "ASUS";
-    private final String NEW_MODEL_NAME = "Test";
-    private final String NEW_MODEL_TYPE_NAME = "CPU";
+    private final String SECOND_MODEL_NAME = "Intel Core i5-4670 Haswell";
+    private final String FIRST_MODEL_TYPE = "CPU";
+    private final String MODEL_NAME = "Intel Core 2 Duo E8400";
+    private final String NEW_MODEL_NAME = "TestName";
+    private final String NEW_MODEL_TYPE_NAME = FIRST_MODEL_TYPE;
     private final String BEGIN_DATE = "2013-08-10";
-    private final String END_DATE = "2014-12-01";
-    private final LocalDate NEW_RELEASE_DATE = LocalDate.parse("2000-09-09");
+    private final String END_DATE = "2016-12-01";
+    private final LocalDate NEW_RELEASE_DATE = LocalDate.parse("2015-09-09");
 
-    HardwareModel newModel = new HardwareModel("Intel Core i3", "CPU",
+    HardwareModel newModel = new HardwareModel(NEW_MODEL_NAME + "1", NEW_MODEL_TYPE_NAME,
             LocalDate.parse("2012-11-03"));
 
     @Autowired
@@ -43,7 +46,7 @@ public class HardwareModelDaoImplTest {
     public void getModelsQuantity() throws Exception {
         int quantity = hardwareModelDao.getModelsQuantity();
         LOGGER.debug("test getModelsQuantity() in dao; Returned int: {}", quantity);
-        Assert.assertEquals("Check models quantity", 5, quantity);
+        Assert.assertEquals("Check models quantity", QUANTITY, quantity);
     }
 
     @Test
@@ -51,8 +54,8 @@ public class HardwareModelDaoImplTest {
         List<HardwareModel> modelsList = hardwareModelDao.getAllModels();
         LOGGER.debug("test getAllModels() in dao; Returned list: {}", modelsList);
         Assert.assertTrue("Check quantity of models", modelsList.size() > 0);
-        Assert.assertEquals("Check model's name","GTX Titan", modelsList.get(2).getModelName());
-        Assert.assertEquals("Check model's type", "CPU", modelsList.get(0).getModelType());
+        Assert.assertEquals("Check model's name",SECOND_MODEL_NAME, modelsList.get(1).getModelName());
+        Assert.assertEquals("Check model's type", FIRST_MODEL_TYPE, modelsList.get(0).getModelType());
     }
 
     @Test
@@ -122,10 +125,13 @@ public class HardwareModelDaoImplTest {
         LOGGER.debug("test getModelsByPeriod() in dao; Returned list: {}", modelsByPeriodList);
 
         for(int i = 0; i < modelsByPeriodList.size(); i++) {
-            if(modelsByPeriodList.get(i).getReleaseDate().compareTo(begin) == 1)
+            LocalDate temp = modelsByPeriodList.get(i).getReleaseDate();
+            System.out.println(modelsByPeriodList.get(i).getReleaseDate().compareTo(begin));
+            if(modelsByPeriodList.get(i).getReleaseDate().compareTo(begin) > 0)
                 more = true;
-            if(modelsByPeriodList.get(i).getReleaseDate().compareTo(end) == -1)
+            if(modelsByPeriodList.get(i).getReleaseDate().compareTo(end) < 0)
                 less = true;
+            System.out.println(more && less);
             Assert.assertTrue(more && less);
         }
     }
