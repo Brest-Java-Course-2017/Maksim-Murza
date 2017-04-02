@@ -62,7 +62,7 @@ public interface HardwareModelService {
      * Sort model.
      *
      * @param begin, end
-     * @return
+     * @return modelsList
      */
     List<HardwareModel> getModelsByPeriod(LocalDate begin, LocalDate end) throws DataAccessException;
 }

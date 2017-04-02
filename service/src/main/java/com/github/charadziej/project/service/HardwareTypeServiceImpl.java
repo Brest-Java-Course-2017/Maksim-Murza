@@ -14,7 +14,7 @@ import org.springframework.util.Assert;
 import java.util.List;
 
 /**
- * Created by charadziej on 3/18/17.
+ * Implementation of HardwareTypeServiceImpl
  */
 public class HardwareTypeServiceImpl implements HardwareTypeService {
 
@@ -40,16 +40,14 @@ public class HardwareTypeServiceImpl implements HardwareTypeService {
     public HardwareType getTypeById(Integer typeId) throws DataAccessException {
         LOGGER.debug("getTypeById({}) in service", typeId);
         Assert.notNull(typeId, "Parameter typeId shouldn't be null");
-        HardwareType type = hardwareTypeDao.getTypeById(typeId);
-        return type;
+        return hardwareTypeDao.getTypeById(typeId);
     }
 
     @Override
     public HardwareType getTypeByName(String typeName) throws DataAccessException {
         LOGGER.debug("getTypeByName({}) in service", typeName);
         Assert.hasText(typeName, "Parameter typeName shouldn't be empty");
-        HardwareType type = hardwareTypeDao.getTypeByName(typeName);
-        return type;
+        return hardwareTypeDao.getTypeByName(typeName);
     }
 
     @Override

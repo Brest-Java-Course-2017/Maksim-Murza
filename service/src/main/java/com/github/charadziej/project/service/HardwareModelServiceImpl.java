@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Created by charadziej on 3/18/17.
+ * Implementation of HardwareModelService
  */
 public class HardwareModelServiceImpl implements HardwareModelService {
 
@@ -86,7 +86,7 @@ public class HardwareModelServiceImpl implements HardwareModelService {
         }
 
         if (hardwareModelDao.getModelByName(model.getModelName()) != null &&
-                hardwareModelDao.getModelByName(model.getModelName()).getModelId() != model.getModelId()) {
+                !hardwareModelDao.getModelByName(model.getModelName()).getModelId().equals(model.getModelId())) {
             throw new IllegalArgumentException("Object with this name is already exist");
         }
 
@@ -106,7 +106,10 @@ public class HardwareModelServiceImpl implements HardwareModelService {
         LOGGER.debug("getModelsByPeriod() in service");
         Assert.notNull(begin);
         Assert.notNull(end);
-        Assert.isTrue(begin.compareTo(end) < 0);
+
+        if(begin.compareTo(end) > 0)
+            throw new IllegalArgumentException("Begin date is more then end date");
+
         return hardwareModelDao.getModelsByPeriod(begin, end);
     }
 }
