@@ -146,7 +146,7 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
                     resultSet.getInt(MODEL_ID),
                     resultSet.getString(MODEL_NAME),
                     resultSet.getString(MODEL_TYPE_NAME),
-                    LocalDate.parse(resultSet.getString(RELEASE_DATE))
+                    resultSet.getString(RELEASE_DATE)
             );
             return model;
         }

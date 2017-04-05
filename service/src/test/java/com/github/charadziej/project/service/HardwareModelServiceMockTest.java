@@ -34,7 +34,7 @@ public class HardwareModelServiceMockTest {
     private final String MODEL_NAME = "TestName";
     private final String MODEL_TYPE = "ModelType";
     private final String TYPE_NAME = "TypeName";
-    private final LocalDate RELEASE_DATE = LocalDate.parse("2014-03-03");
+    private final String RELEASE_DATE = "2014-03-03";
     private final LocalDate BEGIN_DATE = LocalDate.parse("2013-03-03");
     private final LocalDate END_DATE = LocalDate.parse("2016-03-03");
 

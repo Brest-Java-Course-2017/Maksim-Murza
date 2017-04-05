@@ -18,17 +18,28 @@ public class HardwareModel {
 
     }
 
-    public HardwareModel(Integer modelId, String modelName, String modelType, LocalDate releaseDate) {
+    public HardwareModel(Integer modelId, String modelName, String modelType, String releaseDate) {
         this.modelId = modelId;
         this.modelName = modelName;
         this.modelType = modelType;
-        this.releaseDate = releaseDate;
+        this.releaseDate = LocalDate.parse(releaseDate);
     }
 
-    public HardwareModel(String modelName, String modelType, LocalDate releaseDate) {
+    public HardwareModel(String modelName, String modelType, String releaseDate) {
         this.modelName = modelName;
         this.modelType = modelType;
-        this.releaseDate = releaseDate;
+        this.releaseDate = LocalDate.parse(releaseDate);
+    }
+
+    public HardwareModel(String modelName, String modelType) {
+        this.modelName = modelName;
+        this.modelType = modelType;
+    }
+
+    public HardwareModel(Integer modelId, String modelName, String modelType) {
+        this.modelId = modelId;
+        this.modelName = modelName;
+        this.modelType = modelType;
     }
 
     public Integer getModelId() {

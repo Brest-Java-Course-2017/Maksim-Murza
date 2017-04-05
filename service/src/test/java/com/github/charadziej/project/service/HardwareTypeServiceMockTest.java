@@ -110,7 +110,7 @@ public class HardwareTypeServiceMockTest {
     public void deleteTypeWithModels() throws Exception {
         HardwareType type = newType;
         type.setTypeId(5);
-        HardwareModel model1 = new HardwareModel("Name","CPU", LocalDate.parse("2014-09-08")),
+        HardwareModel model1 = new HardwareModel("Name","CPU", "2014-09-08"),
                 model2 = new HardwareModel();
         List<HardwareModel> list = new ArrayList<>();
         list.add(model1);
