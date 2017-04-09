@@ -51,6 +51,7 @@ public class HardwareTypeDaoImplTest {
     public void getAllTypes() throws Exception {
         List<HardwareType> typesList = hardwareTypeDao.getAllTypes();
         LOGGER.debug("test getAllTypes() in dao; Returned list: {}", typesList);
+
         Assert.assertTrue("Check quantity of types", typesList.size() > 0);
         Assert.assertEquals("Check type's name",THIRD_TYPE_NAME,typesList.get(2).getTypeName());
         Assert.assertEquals("Check type's quantity", FIRST_TYPE_QUANTITY, typesList.get(0).getQuantity());

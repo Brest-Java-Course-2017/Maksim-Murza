@@ -19,6 +19,8 @@
         <module>service</module>
         <module>service-api</module>
         <module>rest</module>
+        <module>client-api</module>
+        <module>client-rest</module>
     </modules>
 
     <properties>

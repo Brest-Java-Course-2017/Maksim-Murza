@@ -69,6 +69,7 @@ public class HardwareTypeDaoImpl implements HardwareTypeDao {
     public HardwareType getTypeById(Integer typeId) throws DataAccessException {
         LOGGER.debug("getTypeById({}) in dao", typeId);
         HardwareType type;
+
         try {
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_type_id", typeId);
             type = namedParameterJdbcTemplate.queryForObject(getTypeById,
@@ -76,6 +77,7 @@ public class HardwareTypeDaoImpl implements HardwareTypeDao {
         } catch (EmptyResultDataAccessException ex) {
             return null;
         }
+
         return type;
     }
 
@@ -83,6 +85,7 @@ public class HardwareTypeDaoImpl implements HardwareTypeDao {
     public HardwareType getTypeByName(String typeName) throws DataAccessException {
         LOGGER.debug("getTypeByName({}) in dao", typeName);
         HardwareType type;
+
         try {
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_type_name", typeName);
             type = namedParameterJdbcTemplate.queryForObject(getTypeByName,
@@ -90,6 +93,7 @@ public class HardwareTypeDaoImpl implements HardwareTypeDao {
         } catch (EmptyResultDataAccessException ex) {
             return null;
         }
+
         return type;
     }
 

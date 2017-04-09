@@ -75,6 +75,7 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
     public HardwareModel getModelById(Integer modelId) throws DataAccessException {
         LOGGER.debug("getModelById({}) in dao", modelId);
         HardwareModel model;
+
         try {
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_model_id", modelId);
             model = namedParameterJdbcTemplate.queryForObject(getModelByIdSql,
@@ -82,6 +83,7 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
         } catch (EmptyResultDataAccessException ex) {
             return null;
         }
+
         return model;
     }
 
@@ -89,6 +91,7 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
     public HardwareModel getModelByName(String modelName) throws DataAccessException {
         LOGGER.debug("getModelByName({}) in dao", modelName);
         HardwareModel model;
+
         try {
             SqlParameterSource sqlParameterSource = new MapSqlParameterSource("p_model_name", modelName);
             model = namedParameterJdbcTemplate.queryForObject(getModelByNameSql,
@@ -96,6 +99,7 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
         } catch (EmptyResultDataAccessException ex) {
             return null;
         }
+
         return model;
     }
 
@@ -146,7 +150,7 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
                     resultSet.getInt(MODEL_ID),
                     resultSet.getString(MODEL_NAME),
                     resultSet.getString(MODEL_TYPE_NAME),
-                    resultSet.getString(RELEASE_DATE)
+                    LocalDate.parse(resultSet.getString(RELEASE_DATE))
             );
             return model;
         }

@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,9 +35,10 @@ public class HardwareModelDaoImplTest {
     private final String NEW_MODEL_TYPE_NAME = FIRST_MODEL_TYPE;
     private final String BEGIN_DATE = "2013-08-10";
     private final String END_DATE = "2016-12-01";
-    private final String NEW_RELEASE_DATE = "2015-09-09";
+    private final LocalDate NEW_RELEASE_DATE = LocalDate.parse("2015-09-09");
 
-    HardwareModel newModel = new HardwareModel(NEW_MODEL_NAME + "1", NEW_MODEL_TYPE_NAME, "2012-11-03");
+    HardwareModel newModel = new HardwareModel(NEW_MODEL_NAME + "1", NEW_MODEL_TYPE_NAME,
+            LocalDate.parse("2012-11-03"));
 
     @Autowired
     HardwareModelDao hardwareModelDao;
@@ -52,6 +54,7 @@ public class HardwareModelDaoImplTest {
     public void getAllModels() throws Exception {
         List<HardwareModel> modelsList = hardwareModelDao.getAllModels();
         LOGGER.debug("test getAllModels() in dao; Returned list: {}", modelsList);
+
         Assert.assertTrue("Check quantity of models", modelsList.size() > 0);
         Assert.assertEquals("Check model's name",SECOND_MODEL_NAME, modelsList.get(1).getModelName());
         Assert.assertEquals("Check model's type", FIRST_MODEL_TYPE, modelsList.get(0).getModelType());
@@ -88,7 +91,7 @@ public class HardwareModelDaoImplTest {
         HardwareModel model =  hardwareModelDao.getModelById(5);
         model.setModelName(NEW_MODEL_NAME);
         model.setModelType(NEW_MODEL_TYPE_NAME);
-        model.setReleaseDate(LocalDate.parse(NEW_RELEASE_DATE));
+        model.setReleaseDate(NEW_RELEASE_DATE);
         LOGGER.debug("test updateModel() in dao; Object: {}", model);
 
         Integer effectedRowQuantity = hardwareModelDao.updateModel(model);

@@ -31,11 +31,12 @@ public class HardwareModelServiceImplTest {
     private final String MODEL_NAME = "Intel Core 2 Duo E8400";
     private final String NEW_MODEL_NAME = "TestName";
     private final String NEW_MODEL_TYPE_NAME = "CPU";
-    private final String BEGIN_DATE = "2013-08-10";
-    private final String END_DATE = "2016-12-01";
-    private final String NEW_RELEASE_DATE = "2014-09-09";
+    private final LocalDate BEGIN_DATE = LocalDate.parse("2013-08-10");
+    private final LocalDate END_DATE = LocalDate.parse("2016-12-01");
+    private final LocalDate NEW_RELEASE_DATE = LocalDate.parse("2014-09-09");
 
-    HardwareModel newModel = new HardwareModel(NEW_MODEL_NAME, NEW_MODEL_TYPE_NAME, "2012-11-03");
+    HardwareModel newModel = new HardwareModel(NEW_MODEL_NAME, NEW_MODEL_TYPE_NAME,
+            LocalDate.parse("2012-11-03"));
 
     @Autowired
     HardwareModelService hardwareModelService;
@@ -108,19 +109,22 @@ public class HardwareModelServiceImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void addModelWithoutName() throws Exception {
         LOGGER.debug("test addModelWithoutName() in service");
-        hardwareModelService.addModel(new HardwareModel("", "CPU", "2015-11-11"));
+        hardwareModelService.addModel(new HardwareModel("", "CPU",
+                LocalDate.parse("2015-11-11")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void addModelWithoutType() throws Exception {
         LOGGER.debug("test addModelWithoutType() in service");
-        hardwareModelService.addModel(new HardwareModel("Name", "", "2015-11-11"));
+        hardwareModelService.addModel(new HardwareModel("Name", "",
+                LocalDate.parse("2015-11-11")));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void addModelWithWrongType() throws Exception {
         LOGGER.debug("test addModelWithWrongType() in service");
-        hardwareModelService.addModel(new HardwareModel("Name", "Type", "2015-11-11"));
+        hardwareModelService.addModel(new HardwareModel("Name", "Type",
+                LocalDate.parse("2015-11-11")));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -164,7 +168,8 @@ public class HardwareModelServiceImplTest {
     public void updateNotExistedModel() throws Exception {
         LOGGER.debug("test updateNotExistedModel() in service");
         Integer effectedRowsNumber = hardwareModelService.updateModel(
-                new HardwareModel(100, "Name", "Type", "2011-11-10"));
+                new HardwareModel(100, "Name", "Type",
+                        LocalDate.parse("2011-11-10")));
         Assert.assertNull(effectedRowsNumber);
     }
 
@@ -173,7 +178,7 @@ public class HardwareModelServiceImplTest {
         LOGGER.debug("test updateModelWithDuplicateName() in service");
         Integer effectedRowsNumber = hardwareModelService.updateModel(
                 new HardwareModel(1, hardwareModelService.getModelById(2).getModelName(),
-                        "Type", "2011-11-10"));
+                        "Type", LocalDate.parse("2011-11-10")));
         Assert.assertNull(effectedRowsNumber);
     }
 
@@ -182,7 +187,7 @@ public class HardwareModelServiceImplTest {
         LOGGER.debug("test updateModelWithoutId() in service");
         Integer effectedRowsNumber = hardwareModelService.updateModel(
                 new HardwareModel(null, hardwareModelService.getModelById(2).getModelName(),
-                        "Type", "2011-11-10"));
+                        "Type", LocalDate.parse("2011-11-10")));
         Assert.assertNull(effectedRowsNumber);
     }
 
@@ -190,7 +195,8 @@ public class HardwareModelServiceImplTest {
     public void updateModelWithoutName() throws Exception {
         LOGGER.debug("test updateModelWithoutName() in service");
         Integer effectedRowsNumber = hardwareModelService.updateModel(
-                new HardwareModel(1, null, "Type", "2011-11-10"));
+                new HardwareModel(1, null, "Type",
+                        LocalDate.parse("2011-11-10")));
         Assert.assertNull(effectedRowsNumber);
     }
 
@@ -198,7 +204,8 @@ public class HardwareModelServiceImplTest {
     public void updateModelWithoutType() throws Exception {
         LOGGER.debug("test updateModelWithoutType() in service");
         Integer effectedRowsNumber = hardwareModelService.updateModel(
-                new HardwareModel(1, "Name", "", "2011-11-10"));
+                new HardwareModel(1, "Name", "",
+                        LocalDate.parse("2011-11-10")));
         Assert.assertNull(effectedRowsNumber);
     }
 
@@ -235,7 +242,7 @@ public class HardwareModelServiceImplTest {
 
     @Test
     public void getModelsByPeriod() throws Exception {
-        List<HardwareModel> modelsList = hardwareModelService.getModelsByPeriod(LocalDate.parse(BEGIN_DATE), LocalDate.parse(END_DATE));
+        List<HardwareModel> modelsList = hardwareModelService.getModelsByPeriod(BEGIN_DATE, END_DATE);
         Assert.assertNotNull(modelsList);
         LOGGER.debug("test getModelsByPeriod() in service; Returned list: {}", modelsList);
     }
@@ -243,7 +250,8 @@ public class HardwareModelServiceImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void getModelsByWrongPeriod() throws Exception {
         LOGGER.debug("test getModelsByWrongPeriod() in service");
-        hardwareModelService.getModelsByPeriod(LocalDate.parse("2015-11-11"), LocalDate.parse("2014-11-10"));
+        hardwareModelService.getModelsByPeriod(LocalDate.parse("2015-11-11"),
+                LocalDate.parse("2014-11-10"));
     }
 
 }

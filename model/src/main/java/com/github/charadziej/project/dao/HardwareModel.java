@@ -1,5 +1,7 @@
 package com.github.charadziej.project.dao;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
@@ -12,23 +14,24 @@ public class HardwareModel {
     private Integer modelId;
     private String modelName;
     private String modelType;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate releaseDate;
 
     public HardwareModel() {
 
     }
 
-    public HardwareModel(Integer modelId, String modelName, String modelType, String releaseDate) {
+    public HardwareModel(Integer modelId, String modelName, String modelType, LocalDate releaseDate) {
         this.modelId = modelId;
         this.modelName = modelName;
         this.modelType = modelType;
-        this.releaseDate = LocalDate.parse(releaseDate);
+        this.releaseDate = releaseDate;
     }
 
-    public HardwareModel(String modelName, String modelType, String releaseDate) {
+    public HardwareModel(String modelName, String modelType, LocalDate releaseDate) {
         this.modelName = modelName;
         this.modelType = modelType;
-        this.releaseDate = LocalDate.parse(releaseDate);
+        this.releaseDate = releaseDate;
     }
 
     public HardwareModel(String modelName, String modelType) {
