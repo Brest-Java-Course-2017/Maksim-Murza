@@ -71,5 +71,5 @@ public interface HardwareModelDao {
      * @param begin, end
      * @return models list
      */
-    List<HardwareModel> getModelsByPeriod(LocalDate begin, LocalDate end) throws DataAccessException;
+    List<HardwareModel> getModelsByPeriod(Date begin, Date end) throws DataAccessException;
 }

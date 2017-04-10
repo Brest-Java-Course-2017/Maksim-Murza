@@ -17,6 +17,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +29,7 @@ import java.util.List;
 public class HardwareModelDaoImpl implements HardwareModelDao {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -134,7 +137,7 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
     }
 
     @Override
-    public List<HardwareModel> getModelsByPeriod(LocalDate begin, LocalDate end) throws DataAccessException {
+    public List<HardwareModel> getModelsByPeriod(Date begin, Date end) throws DataAccessException {
         LOGGER.debug("getModelsByPeriod({},{}) in dao", begin, end);
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         sqlParameterSource.addValue("p_begin", begin);
@@ -146,13 +149,18 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
 
     private class HardwareModelRowMapper implements RowMapper<HardwareModel> {
         public HardwareModel mapRow(ResultSet resultSet, int i) throws SQLException {
-            HardwareModel model = new HardwareModel(
-                    resultSet.getInt(MODEL_ID),
-                    resultSet.getString(MODEL_NAME),
-                    resultSet.getString(MODEL_TYPE_NAME),
-                    LocalDate.parse(resultSet.getString(RELEASE_DATE))
-            );
-            return model;
+            try {
+                HardwareModel model = new HardwareModel(
+                        resultSet.getInt(MODEL_ID),
+                        resultSet.getString(MODEL_NAME),
+                        resultSet.getString(MODEL_TYPE_NAME),
+                        FORMATTER.parse(resultSet.getString(RELEASE_DATE))
+                );
+                return model;
+            } catch (ParseException ex) {
+                LOGGER.debug(ex);
+                throw new SQLException(ex);
+            }
         }
     }
 }

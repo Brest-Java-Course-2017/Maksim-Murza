@@ -11,7 +11,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -25,26 +27,18 @@ import static org.junit.Assert.*;
 public class HardwareModelDaoImplTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
-    private final int QUANTITY = 25;
-    private final Integer MODEL_ID = 2;
-    private final String SECOND_MODEL_NAME = "Intel Core i5-4670 Haswell";
     private final String FIRST_MODEL_TYPE = "CPU";
-    private final String MODEL_NAME = "Intel Core 2 Duo E8400";
     private final String NEW_MODEL_NAME = "TestName";
     private final String NEW_MODEL_TYPE_NAME = FIRST_MODEL_TYPE;
-    private final String BEGIN_DATE = "2013-08-10";
-    private final String END_DATE = "2016-12-01";
-    private final LocalDate NEW_RELEASE_DATE = LocalDate.parse("2015-09-09");
-
-    HardwareModel newModel = new HardwareModel(NEW_MODEL_NAME + "1", NEW_MODEL_TYPE_NAME,
-            LocalDate.parse("2012-11-03"));
 
     @Autowired
     HardwareModelDao hardwareModelDao;
 
     @Test
     public void getModelsQuantity() throws Exception {
+        final int QUANTITY = 25;
         int quantity = hardwareModelDao.getModelsQuantity();
         LOGGER.debug("test getModelsQuantity() in dao; Returned int: {}", quantity);
         Assert.assertEquals("Check models quantity", QUANTITY, quantity);
@@ -53,6 +47,7 @@ public class HardwareModelDaoImplTest {
     @Test
     public void getAllModels() throws Exception {
         List<HardwareModel> modelsList = hardwareModelDao.getAllModels();
+        final String SECOND_MODEL_NAME = "Intel Core i5-4670 Haswell";
         LOGGER.debug("test getAllModels() in dao; Returned list: {}", modelsList);
 
         Assert.assertTrue("Check quantity of models", modelsList.size() > 0);
@@ -62,6 +57,7 @@ public class HardwareModelDaoImplTest {
 
     @Test
     public void getModelById() throws Exception {
+        final Integer MODEL_ID = 2;
         HardwareModel model = hardwareModelDao.getModelById(MODEL_ID);
         LOGGER.debug("test getModelById() in dao; Returned object: {}", model);
         Assert.assertEquals("Check id", MODEL_ID, model.getModelId());
@@ -69,6 +65,7 @@ public class HardwareModelDaoImplTest {
 
     @Test
     public void getModelByName() throws Exception {
+        final String MODEL_NAME = "Intel Core 2 Duo E8400";
         HardwareModel model = hardwareModelDao.getModelByName(MODEL_NAME);
         LOGGER.debug("test getModelById() in dao; Returned object: {}", model);
         Assert.assertEquals("Check name", MODEL_NAME, model.getModelName());
@@ -76,6 +73,8 @@ public class HardwareModelDaoImplTest {
 
     @Test
     public void addModel() throws Exception {
+        HardwareModel newModel = new HardwareModel(NEW_MODEL_NAME + "1", NEW_MODEL_TYPE_NAME,
+                FORMATTER.parse("2012-11-03"));
         Integer quantityBefore = hardwareModelDao.getAllModels().size();
         Integer key = hardwareModelDao.addModel(newModel);
         LOGGER.debug("test addModel() in dao; Returned key: {}", key);
@@ -91,7 +90,7 @@ public class HardwareModelDaoImplTest {
         HardwareModel model =  hardwareModelDao.getModelById(5);
         model.setModelName(NEW_MODEL_NAME);
         model.setModelType(NEW_MODEL_TYPE_NAME);
-        model.setReleaseDate(NEW_RELEASE_DATE);
+        model.setReleaseDate(FORMATTER.parse("2015-09-09"));
         LOGGER.debug("test updateModel() in dao; Object: {}", model);
 
         Integer effectedRowQuantity = hardwareModelDao.updateModel(model);
@@ -103,6 +102,8 @@ public class HardwareModelDaoImplTest {
 
     @Test
     public void deleteModel() throws Exception {
+        HardwareModel newModel = new HardwareModel(NEW_MODEL_NAME + "1", NEW_MODEL_TYPE_NAME,
+                FORMATTER.parse("2012-11-03"));
         Integer quantityBefore = hardwareModelDao.getAllModels().size();
         Integer key = hardwareModelDao.addModel(newModel);
 
@@ -119,15 +120,15 @@ public class HardwareModelDaoImplTest {
 
     @Test
     public void getModelsByPeriod() throws Exception {
-        LocalDate begin = LocalDate.parse(BEGIN_DATE);
-        LocalDate end = LocalDate.parse(END_DATE);
+        Date begin = FORMATTER.parse("2013-08-10");
+        Date end = FORMATTER.parse("2016-12-01");
         boolean less = false, more = false;
 
         List<HardwareModel> modelsByPeriodList = hardwareModelDao.getModelsByPeriod(begin, end);
         LOGGER.debug("test getModelsByPeriod() in dao; Returned list: {}", modelsByPeriodList);
 
         for(int i = 0; i < modelsByPeriodList.size(); i++) {
-            LocalDate temp = modelsByPeriodList.get(i).getReleaseDate();
+            Date temp = modelsByPeriodList.get(i).getReleaseDate();
             System.out.println(modelsByPeriodList.get(i).getReleaseDate().compareTo(begin));
             if(modelsByPeriodList.get(i).getReleaseDate().compareTo(begin) > 0)
                 more = true;

@@ -42,6 +42,7 @@ public class HardwareTypeDaoImplTest {
 
     @Test
     public void getTypesQuantity() throws Exception {
+        final int QUANTITY = 8;
         int quantity = hardwareTypeDao.getTypesQuantity();
         LOGGER.debug("test getModelsQuantity() in dao; Returned int: {}", quantity);
         Assert.assertEquals("Check types quantity", QUANTITY, quantity);
