@@ -14,20 +14,20 @@ public class HardwareModel {
     private Integer modelId;
     private String modelName;
     private String modelType;
-    private LocalDate releaseDate;
+    private Date releaseDate;
 
     public HardwareModel() {
 
     }
 
-    public HardwareModel(Integer modelId, String modelName, String modelType, LocalDate releaseDate) {
+    public HardwareModel(Integer modelId, String modelName, String modelType, Date releaseDate) {
         this.modelId = modelId;
         this.modelName = modelName;
         this.modelType = modelType;
         this.releaseDate = releaseDate;
     }
 
-    public HardwareModel(String modelName, String modelType, LocalDate releaseDate) {
+    public HardwareModel(String modelName, String modelType, Date releaseDate) {
         this.modelName = modelName;
         this.modelType = modelType;
         this.releaseDate = releaseDate;
@@ -68,11 +68,11 @@ public class HardwareModel {
         this.modelType = modelType;
     }
 
-    public LocalDate getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDate releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 

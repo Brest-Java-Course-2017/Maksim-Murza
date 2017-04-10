@@ -3,6 +3,7 @@ package com.github.charadziej.project.dao;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -12,10 +13,11 @@ import java.util.Date;
 
 public class HardwareModelTest {
 
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
+
     private static final Integer MODEL_ID = 1;
     private static final String MODEL_NAME = "Intel core i5";
     private static final String MODEL_TYPE_NAME = "CPU";
-    private static final LocalDate RELEASE_DATE = LocalDate.parse("2016-12-11");
 
     HardwareModel model = new HardwareModel();
 
@@ -39,6 +41,7 @@ public class HardwareModelTest {
 
     @Test
     public void getReleaseDate() throws Exception {
+        Date RELEASE_DATE = FORMATTER.parse("2016-12-11");
         model.setReleaseDate(RELEASE_DATE);
         Assert.assertEquals("check model's release date: ", RELEASE_DATE, model.getReleaseDate());
     }
