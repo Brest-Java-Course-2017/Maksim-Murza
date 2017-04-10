@@ -14,6 +14,7 @@ public class HardwareModel {
     private Integer modelId;
     private String modelName;
     private String modelType;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date releaseDate;
 
     public HardwareModel() {

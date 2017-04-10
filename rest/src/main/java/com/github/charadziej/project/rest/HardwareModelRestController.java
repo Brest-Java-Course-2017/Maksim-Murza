@@ -10,7 +10,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +24,7 @@ import java.util.List;
 public class HardwareModelRestController {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler({IllegalArgumentException.class})
@@ -47,6 +51,7 @@ public class HardwareModelRestController {
         return hardwareModelService.getModelById(modelId);
     }
 
+    //curl -v "localhost:8088/model/name?modelName=Intel+Pentium+G4560+Kabylake"
     @RequestMapping("/model/name")
     @ResponseStatus(HttpStatus.FOUND)
     public HardwareModel getModelByName(@RequestParam("modelName") String modelName) {
@@ -70,7 +75,7 @@ public class HardwareModelRestController {
         return hardwareModelService.updateModel(hardwareModel);
     }
 
-    //curl -v -X DELETE localhost:8088/model/25
+    //curl -v -X DELETE localhost:8088/model/id/25
     @DeleteMapping("/model/id/{modelId}")
     @ResponseStatus(HttpStatus.OK)
     public Integer deleteModel(@PathVariable("modelId") Integer modelId) {
@@ -78,12 +83,14 @@ public class HardwareModelRestController {
         return hardwareModelService.deleteModel(modelId);
     }
 
+    //curl -v localhost:8088/models/2014-05-05/2016-05-05
     @GetMapping("/models/{begin}/{end}")
     @ResponseStatus(HttpStatus.FOUND)
-    public @ResponseBody List<HardwareModel> getModelsByPeriod(@PathVariable("begin") String begin,
-                                                               @PathVariable("end") String end) {
+    public @ResponseBody List<HardwareModel> getModelsByPeriod(@PathVariable("begin") @DateTimeFormat(pattern = "yyyy-MM-dd") String begin,
+                                                               @PathVariable("end") @DateTimeFormat(pattern = "yyyy-MM-dd") String end) throws ParseException {
         LOGGER.debug("getModelsByPeriod({},{})", begin, end);
-        return hardwareModelService.getModelsByPeriod(LocalDate.parse(begin),
-                LocalDate.parse(end));
+        Date beginDate = FORMATTER.parse(begin);
+        Date endDate = FORMATTER.parse(end);
+        return hardwareModelService.getModelsByPeriod(beginDate, endDate);
     }
 }

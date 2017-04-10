@@ -45,6 +45,7 @@ public class HardwareTypeRestController {
         return hardwareTypeService.getTypeById(typeId);
     }
 
+    //curl -v "localhost:8088/type/name?typeName=CPU"
     @GetMapping("/type/name")
     @ResponseStatus(HttpStatus.FOUND)
     public @ResponseBody HardwareType getTypeByName(@RequestParam("typeName") String typeName) {

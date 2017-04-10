@@ -37,7 +37,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 public class HardwareTypeRestControllerMockTest {
 
     private final Integer TYPE_ID = 5;
-    private final String TYPE_NAME = "TypeName";
 
     HardwareType newType = new HardwareType("CPU");
 
@@ -71,10 +70,13 @@ public class HardwareTypeRestControllerMockTest {
         expect(hardwareTypeService.getAllTypes()).andReturn(list);
         replay(hardwareTypeService);
 
+        String listStr = new ObjectMapper().writeValueAsString(list);
+
         mockMvc.perform(
                 get("/types")
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(print())
+                .andExpect(content().string(listStr))
                 .andExpect(status().isOk());
     }
 
@@ -83,15 +85,19 @@ public class HardwareTypeRestControllerMockTest {
         expect(hardwareTypeService.getTypeById(TYPE_ID)).andReturn(newType);
         replay(hardwareTypeService);
 
+        String typeStr = new ObjectMapper().writeValueAsString(newType);
+
         mockMvc.perform(
                 get("/type/id/" + TYPE_ID)
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(print())
+                .andExpect(content().string(typeStr))
                 .andExpect(status().isFound());
     }
 
     @Test
     public void getTypeByName() throws Exception {
+        final String TYPE_NAME = "TypeName";
         expect(hardwareTypeService.getTypeByName(TYPE_NAME)).andReturn(newType);
         replay(hardwareTypeService);
 

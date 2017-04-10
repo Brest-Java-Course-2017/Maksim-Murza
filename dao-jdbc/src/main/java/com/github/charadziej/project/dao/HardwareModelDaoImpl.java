@@ -149,18 +149,13 @@ public class HardwareModelDaoImpl implements HardwareModelDao {
 
     private class HardwareModelRowMapper implements RowMapper<HardwareModel> {
         public HardwareModel mapRow(ResultSet resultSet, int i) throws SQLException {
-            try {
-                HardwareModel model = new HardwareModel(
-                        resultSet.getInt(MODEL_ID),
-                        resultSet.getString(MODEL_NAME),
-                        resultSet.getString(MODEL_TYPE_NAME),
-                        FORMATTER.parse(resultSet.getString(RELEASE_DATE))
-                );
-                return model;
-            } catch (ParseException ex) {
-                LOGGER.debug(ex);
-                throw new SQLException(ex);
-            }
+            HardwareModel model = new HardwareModel(
+                    resultSet.getInt(MODEL_ID),
+                    resultSet.getString(MODEL_NAME),
+                    resultSet.getString(MODEL_TYPE_NAME),
+                    resultSet.getDate(RELEASE_DATE)
+            );
+            return model;
         }
     }
 }

@@ -3,6 +3,8 @@ package com.github.charadziej.project.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.charadziej.project.dao.HardwareModel;
 import com.github.charadziej.project.service.HardwareModelService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -19,11 +21,9 @@ import org.springframework.util.MultiValueMap;
 
 import javax.annotation.Resource;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -40,15 +40,12 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 @ContextConfiguration(locations = {"classpath*:spring-rest-mock.xml"})
 public class HardwareModelRestControllerMockTest {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
+
     private final Integer MODEL_ID = 5;
     private final String MODEL_NAME = "TestName";
     private final String MODEL_TYPE = "CPU";
-    private final String TYPE_NAME = "TypeName";
-    private final LocalDate RELEASE_DATE = LocalDate.parse("2014-03-03");
-    private final LocalDate BEGIN_DATE = LocalDate.parse("2013-03-03");
-    private final LocalDate END_DATE = LocalDate.parse("2016-03-03");
-
-    HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, RELEASE_DATE);
 
     @Resource
     private HardwareModelRestController hardwareModelRestController;
@@ -73,9 +70,12 @@ public class HardwareModelRestControllerMockTest {
 
     @Test
     public void getAllModels() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         List<HardwareModel> list = new ArrayList<>();
         list.add(newModel);
         list.add(new HardwareModel());
+
+        String listStr = new ObjectMapper().writeValueAsString(list);
 
         expect(hardwareModelService.getAllModels()).andReturn(list);
         replay(hardwareModelService);
@@ -84,11 +84,13 @@ public class HardwareModelRestControllerMockTest {
                 get("/models")
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(print())
+                .andExpect(content().string(listStr))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getModelById() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         expect(hardwareModelService.getModelById(MODEL_ID)).andReturn(newModel);
         replay(hardwareModelService);
 
@@ -98,12 +100,13 @@ public class HardwareModelRestControllerMockTest {
                 get("/model/id/" + MODEL_ID)
                 .accept(MediaType.APPLICATION_JSON)
         ).andDo(print())
-                //.andExpect(content().string(modelStr))
+                .andExpect(content().string(modelStr))
                 .andExpect(status().isFound());
     }
 
     @Test
     public void getModelByName() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         expect(hardwareModelService.getModelByName(MODEL_NAME)).andReturn(newModel);
         replay(hardwareModelService);
 
@@ -114,25 +117,19 @@ public class HardwareModelRestControllerMockTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andDo(print())
-                //.andExpect(content().string(modelStr))
+                .andExpect(content().string(modelStr))
                 .andExpect(status().isFound());
     }
 
     @Test
     public void addModel() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         expect(hardwareModelService.addModel(anyObject(HardwareModel.class))).andReturn(3);
         replay(hardwareModelService);
 
-        /*String newModelStr = new ObjectMapper().writeValueAsString(newModel);
-        System.out.println(newModel);
-        System.out.print("model: ");
-        System.out.println(newModelStr);*/
+        String newModelStr = new ObjectMapper().writeValueAsString(newModel);
 
-        //FIXME: fix LocalDate serialization or change date type
-
-        String newModelStr = "{\"modelId\":null,\"modelName\":\"TestName\",\"modelType\":\"CPU\",\"releaseDate\":\"2014-09-09\"}";
-
-                mockMvc.perform(
+        mockMvc.perform(
                 post("/model")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -144,10 +141,11 @@ public class HardwareModelRestControllerMockTest {
 
     @Test
     public void updateModel() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         expect(hardwareModelService.updateModel(anyObject(HardwareModel.class))).andReturn(1);
         replay(hardwareModelService);
 
-        String newModelStr = "{\"modelId\":\"5\",\"modelName\":\"TestName\",\"modelType\":\"CPU\",\"releaseDate\":\"2014-09-09\"}";
+        String newModelStr = new ObjectMapper().writeValueAsString(newModel);
 
         mockMvc.perform(
                 put("/model")
@@ -174,18 +172,23 @@ public class HardwareModelRestControllerMockTest {
 
     @Test
     public void getModelsByPeriod() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         List<HardwareModel> list = new ArrayList<>();
         list.add(newModel);
         list.add(new HardwareModel());
 
-        expect(hardwareModelService.getModelsByPeriod(BEGIN_DATE, END_DATE)).andReturn(list);
+        expect(hardwareModelService.getModelsByPeriod(FORMATTER.parse("2013-03-03"),
+                FORMATTER.parse("2016-03-03"))).andReturn(list);
         replay(hardwareModelService);
 
+        String listStr = new ObjectMapper().writeValueAsString(list);
+
         mockMvc.perform(
-                get("/models/" + BEGIN_DATE + "/" + END_DATE)
+                get("/models/" + "2013-03-03" + "/" + "2016-03-03")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andDo(print())
+                .andExpect(content().string(listStr))
                 .andExpect(status().isFound());
     }
 }
