@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -257,4 +258,13 @@ public class HardwareModelServiceImplTest {
                 FORMATTER.parse("2014-11-10"));
     }
 
+    @Test
+    public void getModelsByIndefinitePeriod() throws Exception {
+        Date begin = FORMATTER.parse("2014-08-10"), end = null;
+        List<HardwareModel> modelsByPeriodList = hardwareModelService.getModelsByPeriod(begin, end);
+
+        LOGGER.debug("test getModelsByPeriod() in dao; Returned list: {}", modelsByPeriodList);
+
+        Assert.assertNotNull(modelsByPeriodList);
+    }
 }

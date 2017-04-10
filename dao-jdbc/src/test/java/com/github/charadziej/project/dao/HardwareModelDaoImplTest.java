@@ -138,5 +138,4 @@ public class HardwareModelDaoImplTest {
             Assert.assertTrue(more && less);
         }
     }
-
 }

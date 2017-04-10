@@ -52,9 +52,9 @@ public class HardwareModelServiceImpl implements HardwareModelService {
 
     @Override
     public int addModel(HardwareModel model) throws DataAccessException {
-        Assert.notNull(model);
         LOGGER.debug("addModel({}) in service", model);
 
+        Assert.notNull(model);
         Assert.hasText(model.getModelName(), "Parameter modelName shouldn't be empty");
         Assert.hasText(model.getModelType(), "Parameter modelType shouldn't be empty");
         Assert.notNull(model.getReleaseDate(), "Parameter releaseDate shouldn't be empty");
@@ -72,9 +72,9 @@ public class HardwareModelServiceImpl implements HardwareModelService {
 
     @Override
     public int updateModel(HardwareModel model) throws DataAccessException {
-        Assert.notNull(model);
         LOGGER.debug("updateModel({}) in service", model);
 
+        Assert.notNull(model);
         Assert.notNull(model.getModelId(),"Parameter modelId shouldn't be null");
         Assert.hasText(model.getModelName(), "Parameter modelName shouldn't be empty");
         Assert.hasText(model.getModelType(), "Parameter modelType shouldn't be empty");
@@ -98,17 +98,22 @@ public class HardwareModelServiceImpl implements HardwareModelService {
 
     @Override
     public int deleteModel(Integer modelId) throws DataAccessException {
+        LOGGER.debug("deleteModel({}) in service", modelId);
         Assert.notNull(modelId);
         Assert.notNull(hardwareModelDao.getModelById(modelId), "Object is not exist");
-        LOGGER.debug("deleteModel({}) in service", modelId);
         return hardwareModelDao.deleteModel(modelId);
     }
 
     @Override
     public List<HardwareModel> getModelsByPeriod(Date begin, Date end) throws DataAccessException {
         LOGGER.debug("getModelsByPeriod({},{}) in service", begin, end);
-        Assert.notNull(begin);
-        Assert.notNull(end);
+
+        if(begin == null && end == null)
+            return hardwareModelDao.getAllModels();
+        else if(begin == null)
+            begin = hardwareModelDao.getModelById(hardwareModelDao.getModelsQuantity()).getReleaseDate();
+        else if(end == null)
+            end = hardwareModelDao.getModelById(1).getReleaseDate();
 
         if(begin.compareTo(end) > 0)
             throw new IllegalArgumentException("Begin date is more then end date");

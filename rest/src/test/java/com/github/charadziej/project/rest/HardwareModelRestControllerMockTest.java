@@ -182,9 +182,36 @@ public class HardwareModelRestControllerMockTest {
         replay(hardwareModelService);
 
         String listStr = new ObjectMapper().writeValueAsString(list);
+        MultiValueMap<String, String> period = new LinkedMultiValueMap<>();
+        period.add("begin","2013-03-03");
+        period.add("end", "2016-03-03");
 
         mockMvc.perform(
-                get("/models/" + "2013-03-03" + "/" + "2016-03-03")
+                get("/models/period").params(period)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andDo(print())
+                .andExpect(content().string(listStr))
+                .andExpect(status().isFound());
+    }
+
+    @Test
+    public void getModelsByIndefinitePeriod() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
+        List<HardwareModel> list = new ArrayList<>();
+        list.add(newModel);
+        list.add(new HardwareModel());
+
+        expect(hardwareModelService.getModelsByPeriod(null, FORMATTER.parse("2016-03-03"))).andReturn(list);
+        replay(hardwareModelService);
+
+        String listStr = new ObjectMapper().writeValueAsString(list);
+        MultiValueMap<String, String> period = new LinkedMultiValueMap<>();
+        period.add("begin",null);
+        period.add("end", "2016-03-03");
+
+        mockMvc.perform(
+                get("/models/period").params(period)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andDo(print())

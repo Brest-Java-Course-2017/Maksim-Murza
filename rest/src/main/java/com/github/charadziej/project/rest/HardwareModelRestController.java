@@ -83,14 +83,13 @@ public class HardwareModelRestController {
         return hardwareModelService.deleteModel(modelId);
     }
 
-    //curl -v localhost:8088/models/2014-05-05/2016-05-05
-    @GetMapping("/models/{begin}/{end}")
+    //curl -v "localhost:8088/models/period?begin=%00&end=2014-04-04"
+    @GetMapping("/models/period")
     @ResponseStatus(HttpStatus.FOUND)
-    public @ResponseBody List<HardwareModel> getModelsByPeriod(@PathVariable("begin") @DateTimeFormat(pattern = "yyyy-MM-dd") String begin,
-                                                               @PathVariable("end") @DateTimeFormat(pattern = "yyyy-MM-dd") String end) throws ParseException {
+    public @ResponseBody List<HardwareModel> getModelsByPeriod(@RequestParam(value = "begin", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date begin,
+                                                               @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) throws ParseException {
         LOGGER.debug("getModelsByPeriod({},{})", begin, end);
-        Date beginDate = FORMATTER.parse(begin);
-        Date endDate = FORMATTER.parse(end);
-        return hardwareModelService.getModelsByPeriod(beginDate, endDate);
+
+        return hardwareModelService.getModelsByPeriod(begin, end);
     }
 }
