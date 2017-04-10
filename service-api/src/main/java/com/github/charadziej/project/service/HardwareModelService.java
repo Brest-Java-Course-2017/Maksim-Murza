@@ -5,6 +5,7 @@ import org.springframework.cglib.core.Local;
 import org.springframework.dao.DataAccessException;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,5 +66,5 @@ public interface HardwareModelService {
      * @param begin, end
      * @return modelsList
      */
-    List<HardwareModel> getModelsByPeriod(LocalDate begin, LocalDate end) throws DataAccessException;
+    List<HardwareModel> getModelsByPeriod(Date begin, Date end) throws DataAccessException;
 }

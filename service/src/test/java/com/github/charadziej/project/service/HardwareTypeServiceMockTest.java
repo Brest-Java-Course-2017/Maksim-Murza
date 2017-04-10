@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,7 @@ import static org.easymock.EasyMock.*;
 public class HardwareTypeServiceMockTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
-
-    private final Integer TYPE_ID = 5;
-    private final String TYPE_NAME = "TypeName";
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
     HardwareType newType = new HardwareType("CPU");
 
@@ -59,6 +58,7 @@ public class HardwareTypeServiceMockTest {
 
     @Test
     public void getTypeByName() throws Exception {
+        final String TYPE_NAME = "TypeName";
         expect(mockHardwareTypeDao.getTypeByName(TYPE_NAME)).andReturn(newType);
         replay(mockHardwareModelDao, mockHardwareTypeDao);
         Assert.assertEquals(newType, hardwareTypeService.getTypeByName(TYPE_NAME));
@@ -66,6 +66,7 @@ public class HardwareTypeServiceMockTest {
 
     @Test
     public void addType() throws Exception {
+        final Integer TYPE_ID = 5;
         expect(mockHardwareTypeDao.getTypeByName(newType.getTypeName())).andReturn(null);
         expect(mockHardwareTypeDao.addType(newType)).andReturn(TYPE_ID);
         replay(mockHardwareModelDao, mockHardwareTypeDao);
@@ -110,7 +111,7 @@ public class HardwareTypeServiceMockTest {
     public void deleteTypeWithModels() throws Exception {
         HardwareType type = newType;
         type.setTypeId(5);
-        HardwareModel model1 = new HardwareModel("Name","CPU", LocalDate.parse("2014-09-08")),
+        HardwareModel model1 = new HardwareModel("Name","CPU", FORMATTER.parse("2014-09-08")),
                 model2 = new HardwareModel();
         List<HardwareModel> list = new ArrayList<>();
         list.add(model1);

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +30,12 @@ import static org.easymock.EasyMock.*;
 public class HardwareModelServiceMockTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
     private final Integer MODEL_ID = 5;
     private final String MODEL_NAME = "TestName";
     private final String MODEL_TYPE = "ModelType";
     private final String TYPE_NAME = "TypeName";
-    private final LocalDate RELEASE_DATE = LocalDate.parse("2014-03-03");
-    private final LocalDate BEGIN_DATE = LocalDate.parse("2013-03-03");
-    private final LocalDate END_DATE = LocalDate.parse("2016-03-03");
-
-    HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, RELEASE_DATE);
 
     @Autowired
     HardwareModelService hardwareModelService;
@@ -68,6 +65,7 @@ public class HardwareModelServiceMockTest {
 
     @Test
     public void getModelById() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         expect(mockHardwareModelDao.getModelById(MODEL_ID)).andReturn(newModel);
         replay(mockHardwareModelDao, mockHardwareTypeDao);
         Assert.assertEquals(newModel, hardwareModelService.getModelById(MODEL_ID));
@@ -75,6 +73,7 @@ public class HardwareModelServiceMockTest {
 
     @Test
     public void getModelByName() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         expect(mockHardwareModelDao.getModelByName(MODEL_NAME)).andReturn(newModel);
         replay(mockHardwareModelDao, mockHardwareTypeDao);
         Assert.assertEquals(newModel, hardwareModelService.getModelByName(MODEL_NAME));
@@ -82,6 +81,7 @@ public class HardwareModelServiceMockTest {
 
     @Test
     public void addModel() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         HardwareType type = new HardwareType(TYPE_NAME);
         expect(mockHardwareTypeDao.getTypeByName(newModel.getModelType())).andReturn(type);
         expect(mockHardwareModelDao.getModelByName(newModel.getModelName())).andReturn(null);
@@ -92,6 +92,7 @@ public class HardwareModelServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void addModelWithDuplicateName() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         HardwareModel model = newModel;
         model.setModelType(TYPE_NAME);
         HardwareType type = new HardwareType(TYPE_NAME);
@@ -103,6 +104,7 @@ public class HardwareModelServiceMockTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void addModelWithWrongType() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         expect(mockHardwareTypeDao.getTypeByName(newModel.getModelType())).andReturn(null);
         replay(mockHardwareModelDao, mockHardwareTypeDao);
         hardwareModelService.addModel(newModel);
@@ -110,6 +112,7 @@ public class HardwareModelServiceMockTest {
 
     @Test
     public void updateModel() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         newModel.setModelId(MODEL_ID);
         HardwareType type = new HardwareType(TYPE_NAME);
         expect(mockHardwareTypeDao.getTypeByName(newModel.getModelType())).andReturn(type);
@@ -122,6 +125,7 @@ public class HardwareModelServiceMockTest {
 
     @Test
     public void deleteModel() throws Exception {
+        HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         newModel.setModelId(MODEL_ID);
         expect(mockHardwareModelDao.getModelById(newModel.getModelId())).andReturn(newModel);
         expect(mockHardwareModelDao.deleteModel(newModel.getModelId())).andReturn(1);
@@ -135,14 +139,17 @@ public class HardwareModelServiceMockTest {
         List<HardwareModel> list = new ArrayList<>();
         list.add(model1);
         list.add(model2);
-        expect(mockHardwareModelDao.getModelsByPeriod(BEGIN_DATE, END_DATE)).andReturn(list);
+        expect(mockHardwareModelDao.getModelsByPeriod(FORMATTER.parse("2013-03-03"),
+                FORMATTER.parse("2016-03-03"))).andReturn(list);
         replay(mockHardwareModelDao, mockHardwareTypeDao);
-        hardwareModelService.getModelsByPeriod(BEGIN_DATE, END_DATE);
+        hardwareModelService.getModelsByPeriod(FORMATTER.parse("2013-03-03"),
+                FORMATTER.parse("2016-03-03"));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void getModelsByWrongPeriod() throws Exception {
         replay(mockHardwareModelDao, mockHardwareTypeDao);
-        hardwareModelService.getModelsByPeriod(END_DATE, BEGIN_DATE);
+        hardwareModelService.getModelsByPeriod(FORMATTER.parse("2016-03-03"),
+                FORMATTER.parse("2013-03-03"));
     }
 }

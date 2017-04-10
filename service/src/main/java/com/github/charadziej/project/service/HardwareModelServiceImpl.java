@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.util.Assert;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ import java.util.List;
 public class HardwareModelServiceImpl implements HardwareModelService {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
     @Autowired
     HardwareModelDao hardwareModelDao;
@@ -102,8 +105,8 @@ public class HardwareModelServiceImpl implements HardwareModelService {
     }
 
     @Override
-    public List<HardwareModel> getModelsByPeriod(LocalDate begin, LocalDate end) throws DataAccessException {
-        LOGGER.debug("getModelsByPeriod() in service");
+    public List<HardwareModel> getModelsByPeriod(Date begin, Date end) throws DataAccessException {
+        LOGGER.debug("getModelsByPeriod({},{}) in service", begin, end);
         Assert.notNull(begin);
         Assert.notNull(end);
 
