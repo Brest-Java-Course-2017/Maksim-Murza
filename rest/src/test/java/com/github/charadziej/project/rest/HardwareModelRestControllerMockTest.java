@@ -27,9 +27,7 @@ import java.util.Map;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,7 +42,7 @@ public class HardwareModelRestControllerMockTest {
 
     private final Integer MODEL_ID = 5;
     private final String MODEL_NAME = "TestName";
-    private final String MODEL_TYPE = "ModelType";
+    private final String MODEL_TYPE = "CPU";
     private final String TYPE_NAME = "TypeName";
     private final LocalDate RELEASE_DATE = LocalDate.parse("2014-03-03");
     private final LocalDate BEGIN_DATE = LocalDate.parse("2013-03-03");
@@ -121,16 +119,20 @@ public class HardwareModelRestControllerMockTest {
     }
 
     @Test
-    @Ignore
     public void addModel() throws Exception {
         expect(hardwareModelService.addModel(anyObject(HardwareModel.class))).andReturn(3);
         replay(hardwareModelService);
 
-        String newModelStr = new ObjectMapper().writeValueAsString(newModel);
+        /*String newModelStr = new ObjectMapper().writeValueAsString(newModel);
+        System.out.println(newModel);
         System.out.print("model: ");
-        System.out.println(newModelStr);
+        System.out.println(newModelStr);*/
 
-        mockMvc.perform(
+        //FIXME: fix LocalDate serialization or change date type
+
+        String newModelStr = "{\"modelId\":null,\"modelName\":\"TestName\",\"modelType\":\"CPU\",\"releaseDate\":\"2014-09-09\"}";
+
+                mockMvc.perform(
                 post("/model")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -141,9 +143,20 @@ public class HardwareModelRestControllerMockTest {
     }
 
     @Test
-    @Ignore
     public void updateModel() throws Exception {
+        expect(hardwareModelService.updateModel(anyObject(HardwareModel.class))).andReturn(1);
+        replay(hardwareModelService);
 
+        String newModelStr = "{\"modelId\":\"5\",\"modelName\":\"TestName\",\"modelType\":\"CPU\",\"releaseDate\":\"2014-09-09\"}";
+
+        mockMvc.perform(
+                put("/model")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(newModelStr)
+        ).andDo(print())
+                .andExpect(content().string("1"))
+                .andExpect(status().isAccepted());
     }
 
     @Test
@@ -160,7 +173,6 @@ public class HardwareModelRestControllerMockTest {
     }
 
     @Test
-    @Ignore
     public void getModelsByPeriod() throws Exception {
         List<HardwareModel> list = new ArrayList<>();
         list.add(newModel);
@@ -169,19 +181,10 @@ public class HardwareModelRestControllerMockTest {
         expect(hardwareModelService.getModelsByPeriod(BEGIN_DATE, END_DATE)).andReturn(list);
         replay(hardwareModelService);
 
-
-        MultiValueMap<String, LocalDate> period = new LinkedMultiValueMap<>();
-        period.add("begin", BEGIN_DATE);
-        period.add("end", END_DATE);
-
-        String periodStr = new ObjectMapper().writeValueAsString(period);
-        System.out.println(periodStr);
-
         mockMvc.perform(
-                get("/models/period")
+                get("/models/" + BEGIN_DATE + "/" + END_DATE)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(periodStr)
         ).andDo(print())
                 .andExpect(status().isFound());
     }

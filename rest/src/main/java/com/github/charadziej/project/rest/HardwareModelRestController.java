@@ -54,7 +54,7 @@ public class HardwareModelRestController {
         return hardwareModelService.getModelByName(modelName);
     }
 
-    //curl -H "Content-Type: application/json" -X POST -d '{"modelId":null,"modelName":"TestName","modelType":"ModelType","releaseDate":{"year":2014,"month":"MARCH","dayOfMonth":3,"dayOfWeek":"MONDAY","era":"CE","dayOfYear":62,"leapYear":false,"monthValue":3,"chronology":{"calendarType":"iso8601","id":"ISO"}}}' -v localhost:8088/model
+    //curl -H "Content-Type: application/json" -X POST -d '{"modelId":null,"modelName":"TestName","modelType":"CPU","releaseDate":"2014-09-03"}' -v localhost:8088/model
     @PostMapping("/model")
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody Integer addModel(@RequestBody HardwareModel hardwareModel) {
@@ -78,11 +78,12 @@ public class HardwareModelRestController {
         return hardwareModelService.deleteModel(modelId);
     }
 
-    @GetMapping("/models/period")
+    @GetMapping("/models/{begin}/{end}")
     @ResponseStatus(HttpStatus.FOUND)
-    public @ResponseBody List<HardwareModel> getModelsByPeriod(@RequestParam("begin") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
-                                                               @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
+    public @ResponseBody List<HardwareModel> getModelsByPeriod(@PathVariable("begin") String begin,
+                                                               @PathVariable("end") String end) {
         LOGGER.debug("getModelsByPeriod({},{})", begin, end);
-        return hardwareModelService.getModelsByPeriod(begin, end);
+        return hardwareModelService.getModelsByPeriod(LocalDate.parse(begin),
+                LocalDate.parse(end));
     }
 }
