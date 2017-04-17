@@ -71,7 +71,7 @@ public class HardwareTypeRestController {
 
     //curl -v -X DELETE localhost:8088/type/id/7
     @DeleteMapping("/type/id/{typeId}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Integer deleteType(@PathVariable("typeId") Integer typeId) {
         LOGGER.debug("deleteType({})", typeId);
         return hardwareTypeService.deleteType(typeId);

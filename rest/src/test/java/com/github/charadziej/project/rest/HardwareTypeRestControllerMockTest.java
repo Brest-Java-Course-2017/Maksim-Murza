@@ -157,7 +157,7 @@ public class HardwareTypeRestControllerMockTest {
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(print())
                 .andExpect(content().string("1"))
-                .andExpect(status().isOk());
+                .andExpect(status().isAccepted());
     }
 
 }

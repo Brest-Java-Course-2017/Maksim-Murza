@@ -52,7 +52,7 @@ public class HardwareModelRestController {
     }
 
     //curl -v "localhost:8088/model/name?modelName=Intel+Pentium+G4560+Kabylake"
-    @RequestMapping("/model/name")
+    @GetMapping("/model/name")
     @ResponseStatus(HttpStatus.FOUND)
     public HardwareModel getModelByName(@RequestParam("modelName") String modelName) {
         LOGGER.debug("getModelByName({})", modelName);
