@@ -28,7 +28,6 @@ public class HardwareModelDaoImplTest {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
-
     private final String FIRST_MODEL_TYPE = "CPU";
     private final String NEW_MODEL_NAME = "TestName";
     private final String NEW_MODEL_TYPE_NAME = FIRST_MODEL_TYPE;
@@ -49,7 +48,6 @@ public class HardwareModelDaoImplTest {
         List<HardwareModel> modelsList = hardwareModelDao.getAllModels();
         final String SECOND_MODEL_NAME = "Intel Core i5-4670 Haswell";
         LOGGER.debug("test getAllModels() in dao; Returned list: {}", modelsList);
-
         Assert.assertTrue("Check quantity of models", modelsList.size() > 0);
         Assert.assertEquals("Check model's name",SECOND_MODEL_NAME, modelsList.get(1).getModelName());
         Assert.assertEquals("Check model's type", FIRST_MODEL_TYPE, modelsList.get(0).getModelType());
@@ -78,7 +76,6 @@ public class HardwareModelDaoImplTest {
         Integer quantityBefore = hardwareModelDao.getAllModels().size();
         Integer key = hardwareModelDao.addModel(newModel);
         LOGGER.debug("test addModel() in dao; Returned key: {}", key);
-
         Assert.assertEquals(quantityBefore + 1, hardwareModelDao.getAllModels().size());
         Assert.assertNotNull(hardwareModelDao.getModelById(key));
         Assert.assertEquals("Check new model's name", newModel.getModelName(),
@@ -92,10 +89,8 @@ public class HardwareModelDaoImplTest {
         model.setModelType(NEW_MODEL_TYPE_NAME);
         model.setReleaseDate(FORMATTER.parse("2015-09-09"));
         LOGGER.debug("test updateModel() in dao; Object: {}", model);
-
         Integer effectedRowQuantity = hardwareModelDao.updateModel(model);
         System.out.println(hardwareModelDao.getModelById(5));
-
         Assert.assertEquals((Integer) 1, effectedRowQuantity);
         Assert.assertEquals(model, hardwareModelDao.getModelByName(NEW_MODEL_NAME));
     }
@@ -106,14 +101,11 @@ public class HardwareModelDaoImplTest {
                 FORMATTER.parse("2012-11-03"));
         Integer quantityBefore = hardwareModelDao.getAllModels().size();
         Integer key = hardwareModelDao.addModel(newModel);
-
         Assert.assertNotNull(hardwareModelDao.getModelById(key));
         Assert.assertEquals("Check new model's name", newModel.getModelName(),
                 hardwareModelDao.getModelById(key).getModelName());
-
         hardwareModelDao.deleteModel(key);
         LOGGER.debug("test deleteModel() in dao; Deleted object with key: {}", key);
-
         Assert.assertEquals(quantityBefore, (Integer) hardwareModelDao.getAllModels().size());
         Assert.assertNull(hardwareModelDao.getModelById(key));
     }
@@ -123,17 +115,19 @@ public class HardwareModelDaoImplTest {
         Date begin = FORMATTER.parse("2013-08-10");
         Date end = FORMATTER.parse("2016-12-01");
         boolean less = false, more = false;
-
         List<HardwareModel> modelsByPeriodList = hardwareModelDao.getModelsByPeriod(begin, end);
         LOGGER.debug("test getModelsByPeriod() in dao; Returned list: {}", modelsByPeriodList);
 
         for(int i = 0; i < modelsByPeriodList.size(); i++) {
             Date temp = modelsByPeriodList.get(i).getReleaseDate();
             System.out.println(modelsByPeriodList.get(i).getReleaseDate().compareTo(begin));
+
             if(modelsByPeriodList.get(i).getReleaseDate().compareTo(begin) > 0)
                 more = true;
+
             if(modelsByPeriodList.get(i).getReleaseDate().compareTo(end) < 0)
                 less = true;
+
             System.out.println(more && less);
             Assert.assertTrue(more && less);
         }

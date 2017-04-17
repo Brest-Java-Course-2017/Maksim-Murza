@@ -1,0 +1,66 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:application.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/resources/**" location="../resources/"/>
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.github.charadziej.project.client"/>
+
+    <bean id="customResponseErrorHandler" class="com.github.charadziej.project.client.rest.CustomResponseErrorHandler"/>
+
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+            </list>
+        </property>
+        <property name="errorHandler" ref="customResponseErrorHandler"/>
+    </bean>
+
+    <bean id="hardwareModelConsumer" class="com.github.charadziej.project.client.rest.HardwareModelConsumerRest">
+        <constructor-arg index="0" type="java.lang.String" value="${protocol}://${host}:${port}"/>
+        <constructor-arg index="1" type="java.lang.String" value="${models}"/>
+        <constructor-arg index="2" type="java.lang.String" value="${model}"/>
+        <property name="restTemplate" ref="restTemplate"/>
+    </bean>
+
+    <bean id="hardwareTypeConsumer" class="com.github.charadziej.project.client.rest.HardwareTypeConsumerRest">
+        <constructor-arg index="0" type="java.lang.String" value="${protocol}://${host}:${port}"/>
+        <constructor-arg index="1" type="java.lang.String" value="${types}"/>
+        <constructor-arg index="2" type="java.lang.String" value="${type}"/>
+        <property name="restTemplate" ref="restTemplate"/>
+    </bean>
+
+    <bean class="com.github.charadziej.project.web_app.ServletContextFactory" id="servletContext"/>
+
+    <bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+        <constructor-arg ref="servletContext"/>
+        <property name="prefix" value="/WEB-INF/templates/"/>
+        <property name="suffix" value=".html"/>
+        <property name="templateMode" value="HTML5"/>
+    </bean>
+
+    <bean id="templateEngine"
+          class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver"/>
+    </bean>
+
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine"/>
+    </bean>
+
+</beans>

@@ -86,8 +86,11 @@ public class HardwareModelRestController {
     //curl -v "localhost:8088/models/period?begin=%00&end=2014-04-04"
     @GetMapping("/models/period")
     @ResponseStatus(HttpStatus.FOUND)
-    public @ResponseBody List<HardwareModel> getModelsByPeriod(@RequestParam(value = "begin", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date begin,
-                                                               @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) throws ParseException {
+    public @ResponseBody List<HardwareModel> getModelsByPeriod(
+            @RequestParam(value = "begin", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") Date begin,
+            @RequestParam(value = "end", required = false)
+            @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) throws ParseException {
         LOGGER.debug("getModelsByPeriod({},{})", begin, end);
 
         return hardwareModelService.getModelsByPeriod(begin, end);

@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * This class describes our entity "HardwareModel"
+ * This class describes entity HardwareModel
  */
 public class HardwareModel {
 

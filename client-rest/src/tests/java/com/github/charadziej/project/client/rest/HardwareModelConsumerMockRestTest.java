@@ -30,7 +30,6 @@ import static org.junit.Assert.*;
 public class HardwareModelConsumerMockRestTest {
 
     private static final HardwareModel model1 = new HardwareModel("modelName1", "CPU");
-    private static final HardwareModel model2 = new HardwareModel("modelName2", "CPU");
 
     @Autowired
     private HardwareModelConsumerRest hardwareModelConsumerRest;
@@ -56,54 +55,41 @@ public class HardwareModelConsumerMockRestTest {
     public void getAllModels() throws Exception {
         List<HardwareModel> expectedList = new ArrayList(2);
         expectedList.add(model1);
-        expectedList.add(model2);
-
-        System.out.println(url + modelsUrl);
-
+        expectedList.add(new HardwareModel("modelName2", "CPU"));
         expect(mockRestTemplate.getForEntity( url + modelsUrl, List.class))
                 .andReturn(new ResponseEntity<>(expectedList, HttpStatus.OK));
         replay(mockRestTemplate);
-
         List<HardwareModel> list = hardwareModelConsumerRest.getAllModels();
         assertEquals(2, list.size());
     }
 
     @Test
     public void getModelById() throws Exception {
-
         Integer modelId = 1;
-
         expect(mockRestTemplate.getForEntity(url + modelUrl + "/id/" + modelId,
                 HardwareModel.class)).andReturn(new ResponseEntity<>(model1, HttpStatus.FOUND));
         replay(mockRestTemplate);
-
         HardwareModel hardwareType = hardwareModelConsumerRest.getModelById(1);
         assertEquals(hardwareType, model1);
     }
 
     @Test
     public void getModelByName() throws Exception {
-
         expect(mockRestTemplate.getForEntity(url + modelUrl + "/name?modelName=" + model1.getModelName(),
                 HardwareModel.class))
                 .andReturn(new ResponseEntity<>(model1, HttpStatus.FOUND));
         replay(mockRestTemplate);
-
         HardwareModel hardwareModel = hardwareModelConsumerRest.getModelByName("modelName1");
         assertEquals("CPU", hardwareModel.getModelType());
     }
 
     @Test
     public void addModel() throws Exception {
-
         Integer id = 2;
-
         expect(mockRestTemplate.postForEntity(url + modelUrl, model1, Integer.class))
                 .andReturn(new ResponseEntity<>(id, HttpStatus.CREATED));
         replay(mockRestTemplate);
-
         Integer newModelId = hardwareModelConsumerRest.addModel(model1);
         assertEquals(id, newModelId);
     }
-
 }

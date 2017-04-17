@@ -10,7 +10,6 @@ import java.util.Date;
 /**
  * Class for testing HardwareModel's methods.
  */
-
 public class HardwareModelTest {
 
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
@@ -41,9 +40,9 @@ public class HardwareModelTest {
 
     @Test
     public void getReleaseDate() throws Exception {
-        Date RELEASE_DATE = FORMATTER.parse("2016-12-11");
-        model.setReleaseDate(RELEASE_DATE);
-        Assert.assertEquals("check model's release date: ", RELEASE_DATE, model.getReleaseDate());
+        Date releaseDate = FORMATTER.parse("2016-12-11");
+        model.setReleaseDate(releaseDate);
+        Assert.assertEquals("check model's release date: ", releaseDate, model.getReleaseDate());
     }
 
 }

@@ -3,7 +3,7 @@ package com.github.charadziej.project.dao;
 import java.util.Objects;
 
 /**
- * This class describes our entity "HardwareType"
+ * This class describes entity HardwareType
  */
 public class HardwareType {
 

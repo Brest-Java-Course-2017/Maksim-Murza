@@ -86,13 +86,11 @@ public class HardwareModelConsumerRestTest {
     }
 
     @Test
-    @Ignore
     public void getModelsByPeriod() throws Exception {
         begin = FORMATTER.parse("2010-05-05");
         end = FORMATTER.parse("2014-05-05");
         List<HardwareModel> modelsList = hardwareModelConsumerRest.getModelsByPeriod(begin, end);
         LOGGER.debug("Returned list: {}", modelsList);
         Assert.assertNotNull(modelsList);
-        //FIXME: fix incorrect date format
     }
 }

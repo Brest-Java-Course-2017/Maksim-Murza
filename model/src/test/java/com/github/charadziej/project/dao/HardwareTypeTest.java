@@ -6,7 +6,6 @@ import org.junit.Test;
 /**
  * Class for testing HardwareType's methods.
  */
-
 public class HardwareTypeTest {
 
     private static final Integer TYPE_ID = 1;

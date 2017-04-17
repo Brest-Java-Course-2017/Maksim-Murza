@@ -32,7 +32,6 @@ import static org.junit.Assert.*;
 public class HardwareTypeConsumerMockRestTest {
 
     private static final HardwareType type1 = new HardwareType("typeName1");
-    private static final HardwareType type2 = new HardwareType("typeName2");
 
     @Autowired
     private HardwareTypeConsumerRest hardwareTypeConsumerRest;
@@ -56,58 +55,44 @@ public class HardwareTypeConsumerMockRestTest {
 
     @Test
     public void getAllTypes() throws Exception {
-
         List<HardwareType> expectedList = new ArrayList(2);
         expectedList.add(type1);
-        expectedList.add(type2);
-
+        expectedList.add(new HardwareType("typeName2"));
         expect(mockRestTemplate.getForEntity( url + typesUrl, List.class))
                 .andReturn(new ResponseEntity<>(expectedList, HttpStatus.OK));
         replay(mockRestTemplate);
-
         List<HardwareType> list = hardwareTypeConsumerRest.getAllTypes();
         assertEquals(2, list.size());
     }
 
     @Test
     public void getTypeById() throws Exception {
-
         Integer typeId = 1;
-
         expect(mockRestTemplate.getForEntity(url + typeUrl + "/id/" + typeId,
                 HardwareType.class)).andReturn(new ResponseEntity<>(type1, HttpStatus.FOUND));
         replay(mockRestTemplate);
-
         HardwareType hardwareType = hardwareTypeConsumerRest.getTypeById(1);
         assertEquals(hardwareType, type1);
     }
 
     @Test
     public void getTypeByName() throws Exception {
-
         String typeName = "typeName1";
         type1.setQuantity(2);
-
         expect(mockRestTemplate.getForEntity(url + typeUrl + "/name?typeName=" + typeName, HardwareType.class))
                 .andReturn(new ResponseEntity<>(type1, HttpStatus.FOUND));
         replay(mockRestTemplate);
-
         HardwareType hardwareType = hardwareTypeConsumerRest.getTypeByName("typeName1");
         assertEquals(hardwareType.getQuantity(), (Integer) 2);
     }
 
     @Test
     public void addType() throws Exception {
-
-        Integer id = 2;
-
+        Integer typeId = 2;
         expect(mockRestTemplate.postForEntity(url + typeUrl, type1, Integer.class))
-                .andReturn(new ResponseEntity<>(id, HttpStatus.CREATED));
+                .andReturn(new ResponseEntity<>(typeId, HttpStatus.CREATED));
         replay(mockRestTemplate);
-
         Integer newTypeId = hardwareTypeConsumerRest.addType(type1);
-        assertEquals(id, newTypeId);
+        assertEquals(typeId, newTypeId);
     }
-
-    // update and delete methods are void. Impossible to check them.
 }

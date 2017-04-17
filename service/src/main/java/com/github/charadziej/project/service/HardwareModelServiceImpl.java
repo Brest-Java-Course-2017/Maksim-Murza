@@ -73,7 +73,6 @@ public class HardwareModelServiceImpl implements HardwareModelService {
     @Override
     public int updateModel(HardwareModel model) throws DataAccessException {
         LOGGER.debug("updateModel({}) in service", model);
-
         Assert.notNull(model);
         Assert.notNull(model.getModelId(),"Parameter modelId shouldn't be null");
         Assert.hasText(model.getModelName(), "Parameter modelName shouldn't be empty");

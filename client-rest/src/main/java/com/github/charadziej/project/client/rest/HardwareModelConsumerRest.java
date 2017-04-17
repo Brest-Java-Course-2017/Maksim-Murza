@@ -91,11 +91,11 @@ public class HardwareModelConsumerRest implements HardwareModelConsumer {
     }
 
     @Override
-    public List<HardwareModel> getModelsByPeriod(@DateTimeFormat(pattern = "yyyy-MM-dd") Date begin, @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) throws ServerDataAccessException {
-        LOGGER.debug("getModelsByPeriod({},{})", begin, end);
+    public List<HardwareModel> getModelsByPeriod(Date begin, Date end) throws ServerDataAccessException {
+        LOGGER.debug("logger getModelsByPeriod({},{})", FORMATTER.format(begin), FORMATTER.format(end));
         ResponseEntity responseEntity = restTemplate.getForEntity(url + modelsUrl +
-                "/period?begin=" +  (begin == null ? "%00" : begin) + "&end=" +
-                (end == null ? "%00" : end), List.class);
+                "/period?begin=" +  (begin == null ? "%00" : FORMATTER.format(begin)) + "&end=" +
+                (end == null ? "%00" : FORMATTER.format(end)), List.class);
         List<HardwareModel> hardwareModels = (List<HardwareModel>) responseEntity.getBody();
         return hardwareModels;
     }
