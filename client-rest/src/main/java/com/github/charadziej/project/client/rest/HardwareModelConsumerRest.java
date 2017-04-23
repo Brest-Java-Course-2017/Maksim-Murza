@@ -92,10 +92,18 @@ public class HardwareModelConsumerRest implements HardwareModelConsumer {
 
     @Override
     public List<HardwareModel> getModelsByPeriod(Date begin, Date end) throws ServerDataAccessException {
-        LOGGER.debug("logger getModelsByPeriod({},{})", FORMATTER.format(begin), FORMATTER.format(end));
+        String beginStr, endStr;
+
+        if(begin != null)
+            beginStr = FORMATTER.format(begin);
+        else beginStr = "%00";
+        if(end != null)
+            endStr = FORMATTER.format(end);
+        else endStr = "%00";
+
+        LOGGER.debug("logger getModelsByPeriod({},{})", beginStr, endStr);
         ResponseEntity responseEntity = restTemplate.getForEntity(url + modelsUrl +
-                "/period?begin=" +  (begin == null ? "%00" : FORMATTER.format(begin)) + "&end=" +
-                (end == null ? "%00" : FORMATTER.format(end)), List.class);
+                "/period?begin=" +  beginStr + "&end=" + endStr, List.class);
         List<HardwareModel> hardwareModels = (List<HardwareModel>) responseEntity.getBody();
         return hardwareModels;
     }

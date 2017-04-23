@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:vertical-align="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +8,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <ul class="nav navbar-nav">
@@ -16,30 +15,40 @@
             <li><a class="navbar-brand" href="#"th:href="@{/models}">Models</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a class="navbar-nav" href="#" th:href="@{/type/add}">Add</a></li>
+            <li><a class="navbar-nav" href="#" th:href="@{/model/add}">Add</a></li>
         </ul>
+        <form class="navbar-form navbar-right" method="post" th:action="@{/models/period}">
+            <div class="form-group">
+                <label for="begin">From  </label>
+                <input type="text" placeholder="yyyy-MM-dd" class="form-control" id="begin" name="begin"/>
+                <label for="end">To  </label>
+                <input type="text" placeholder="yyyy-MM-dd" class="form-control" id="end" name="end"/>
+            </div>
+            <button type="submit" class="btn btn-default">Sort</button>
+        </form>
     </div>
 </nav>
-
 <div class="container">
-    <h2>Hardware types</h2>
+    <h2>Hardware models</h2>
     <table class="table table-striped">
         <thead>
         <tr>
+            <th>Model</th>
             <th>Type</th>
-            <th>Quantity</th>
+            <th>Release Date</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="type : ${typesList}">
-            <td th:text="${type.typeName}"></td>
-            <td th:text="${type.quantity}"></td>
+        <tr th:each="model : ${modelsList}">
+            <td th:text="${model.modelName}"></td>
+            <td th:text="${model.modelType}"></td>
+            <td th:text="${model.releaseDate}"></td>
             <td>
-                <div class="btn-group" role="group">
-                    <a class="btn btn-default" href="#" th:href="@{/type/edit(typeId=${type.typeId})}">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a class="btn btn-default" href="#" th:href="@{/model/edit(modelId=${model.modelId})}">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
-                    <form class="btn btn-default" method="post" th:action="@{/type/delete(typeId=${type.typeId})}">
+                    <form class="btn btn-default" method="post" th:action="@{/model/delete(modelId=${model.modelId})}">
                         <button type="submit" class="glyphicon glyphicon-trash" style="border: none;
                             background-color: transparent;
                             outline: none;">
@@ -51,6 +60,5 @@
         </tbody>
     </table>
 </div>
-
 </body>
 </html>
