@@ -1,5 +1,6 @@
 package com.github.charadziej.project.client.rest;
 
+import com.github.charadziej.project.client.rest.api.HardwareTypeConsumer;
 import com.github.charadziej.project.dao.HardwareType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +23,7 @@ public class HardwareTypeConsumerRestTest {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Autowired
-    private HardwareTypeConsumerRest hardwareTypeConsumerRest;
+    private HardwareTypeConsumer hardwareTypeConsumerRest;
 
     @Test
     public void getAllTypes() throws Exception {
@@ -51,7 +52,6 @@ public class HardwareTypeConsumerRestTest {
         Integer typeId = hardwareTypeConsumerRest.addType(new HardwareType("newType"));
         LOGGER.debug("Created object with id: {}", typeId);
         Assert.assertEquals((Integer) (typesEquals + 1), typeId);
-        //TODO: handle exception while adding existed type
     }
 
     @Test
@@ -68,6 +68,5 @@ public class HardwareTypeConsumerRestTest {
         Assert.assertNotNull(hardwareTypeConsumerRest.getTypeById(8));
         int i = hardwareTypeConsumerRest.deleteType(8);
         Assert.assertEquals(0, i);
-        //TODO: handle exception while deleting type with models
     }
 }

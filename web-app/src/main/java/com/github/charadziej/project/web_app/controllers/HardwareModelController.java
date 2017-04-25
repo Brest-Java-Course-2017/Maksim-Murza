@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by charadziej on 4/16/17.
+ * Web controller for requests to Hardware model
  */
 
 @Controller
@@ -41,16 +41,18 @@ public class HardwareModelController {
 
     @GetMapping("/model/add")
     public String getModelForm(Model model) {
+        LOGGER.debug("getModelForm()");
         List<HardwareType> typesList = hardwareTypeConsumer.getAllTypes();
         model.addAttribute("typesList", typesList);
         return "add_model";
     }
 
     @PostMapping("/model")
-    public String addModel(@RequestParam("modelName") String modelName,
-                           @RequestParam("modelType") String modelType,
-                           @RequestParam("releaseDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date releaseDate,
+    public String addModel(@RequestParam(value = "modelName", required = false) String modelName,
+                           @RequestParam(value = "modelType", required = false) String modelType,
+                           @RequestParam(value = "releaseDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date releaseDate,
                            Model model) {
+        LOGGER.debug("addModel({},{},{})", modelName, modelType, releaseDate);
         hardwareModelConsumer.addModel(new HardwareModel(modelName, modelType, releaseDate));
         List<HardwareModel> modelsList = hardwareModelConsumer.getAllModels();
         model.addAttribute("modelsList", modelsList);
@@ -72,6 +74,7 @@ public class HardwareModelController {
                               @RequestParam("modelType") String modelType,
                               @RequestParam("releaseDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date releaseDate,
                               Model model) {
+        LOGGER.debug("updateModel({},{},{},{})", modelId, modelName, modelType, releaseDate);
         hardwareModelConsumer.updateModel(new HardwareModel(modelId, modelName, modelType, releaseDate));
         List<HardwareModel> modelsList = hardwareModelConsumer.getAllModels();
         model.addAttribute("modelsList", modelsList);
@@ -91,10 +94,12 @@ public class HardwareModelController {
                                     @RequestParam(value = "end", required = false)
                                         @DateTimeFormat(pattern = "yyyy-MM-dd") Date end, Model model) {
         List<HardwareModel> modelsList;
+        LOGGER.debug("getModelsByPeriod({}, {})", begin, end);
 
-       /* if(begin == null && end == null)
+        if(begin == null && end == null)
             return "redirect:/models";
-        else*/ modelsList = hardwareModelConsumer.getModelsByPeriod(begin, end);
+        else
+            modelsList = hardwareModelConsumer.getModelsByPeriod(begin, end);
 
         model.addAttribute("modelsList", modelsList);
         return "models";

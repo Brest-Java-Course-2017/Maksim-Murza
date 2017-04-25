@@ -1,7 +1,7 @@
 package com.github.charadziej.project.client;
 
 /**
- * Created by charadziej on 4/13/17.
+ * Exception which is thrown on the web-server
  */
 
 public class ServerDataAccessException extends RuntimeException {

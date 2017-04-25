@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by charadziej on 4/13/17.
+ * Interface for rest consumer
  */
 public interface HardwareModelConsumer {
 

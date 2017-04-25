@@ -31,14 +31,14 @@
         <property name="errorHandler" ref="customResponseErrorHandler"/>
     </bean>
 
-    <bean id="hardwareModelConsumer" class="com.github.charadziej.project.client.rest.HardwareModelConsumerRest">
+    <bean id="hardwareModelConsumer" class="com.github.charadziej.project.client.rest.HardwareModelRestConsumer">
         <constructor-arg index="0" type="java.lang.String" value="${protocol}://${host}:${port}"/>
         <constructor-arg index="1" type="java.lang.String" value="${models}"/>
         <constructor-arg index="2" type="java.lang.String" value="${model}"/>
         <property name="restTemplate" ref="restTemplate"/>
     </bean>
 
-    <bean id="hardwareTypeConsumer" class="com.github.charadziej.project.client.rest.HardwareTypeConsumerRest">
+    <bean id="hardwareTypeConsumer" class="com.github.charadziej.project.client.rest.HardwareTypeRestConsumer">
         <constructor-arg index="0" type="java.lang.String" value="${protocol}://${host}:${port}"/>
         <constructor-arg index="1" type="java.lang.String" value="${types}"/>
         <constructor-arg index="2" type="java.lang.String" value="${type}"/>

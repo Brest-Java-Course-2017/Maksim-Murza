@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by charadziej on 4/16/17.
+ * Web controller for requests to Hardware type
  */
 
 @Controller

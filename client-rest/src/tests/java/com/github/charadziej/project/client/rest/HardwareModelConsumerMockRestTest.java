@@ -1,7 +1,7 @@
 package com.github.charadziej.project.client.rest;
 
+import com.github.charadziej.project.client.rest.api.HardwareModelConsumer;
 import com.github.charadziej.project.dao.HardwareModel;
-import com.github.charadziej.project.dao.HardwareType;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +32,7 @@ public class HardwareModelConsumerMockRestTest {
     private static final HardwareModel model1 = new HardwareModel("modelName1", "CPU");
 
     @Autowired
-    private HardwareModelConsumerRest hardwareModelConsumerRest;
+    private HardwareModelConsumer hardwareModelRestConsumer;
 
     @Value("${protocol}://${host}:${port}")
     private String url;
@@ -59,7 +59,7 @@ public class HardwareModelConsumerMockRestTest {
         expect(mockRestTemplate.getForEntity( url + modelsUrl, List.class))
                 .andReturn(new ResponseEntity<>(expectedList, HttpStatus.OK));
         replay(mockRestTemplate);
-        List<HardwareModel> list = hardwareModelConsumerRest.getAllModels();
+        List<HardwareModel> list = hardwareModelRestConsumer.getAllModels();
         assertEquals(2, list.size());
     }
 
@@ -69,7 +69,7 @@ public class HardwareModelConsumerMockRestTest {
         expect(mockRestTemplate.getForEntity(url + modelUrl + "/id/" + modelId,
                 HardwareModel.class)).andReturn(new ResponseEntity<>(model1, HttpStatus.FOUND));
         replay(mockRestTemplate);
-        HardwareModel hardwareType = hardwareModelConsumerRest.getModelById(1);
+        HardwareModel hardwareType = hardwareModelRestConsumer.getModelById(1);
         assertEquals(hardwareType, model1);
     }
 
@@ -79,7 +79,7 @@ public class HardwareModelConsumerMockRestTest {
                 HardwareModel.class))
                 .andReturn(new ResponseEntity<>(model1, HttpStatus.FOUND));
         replay(mockRestTemplate);
-        HardwareModel hardwareModel = hardwareModelConsumerRest.getModelByName("modelName1");
+        HardwareModel hardwareModel = hardwareModelRestConsumer.getModelByName("modelName1");
         assertEquals("CPU", hardwareModel.getModelType());
     }
 
@@ -89,7 +89,7 @@ public class HardwareModelConsumerMockRestTest {
         expect(mockRestTemplate.postForEntity(url + modelUrl, model1, Integer.class))
                 .andReturn(new ResponseEntity<>(id, HttpStatus.CREATED));
         replay(mockRestTemplate);
-        Integer newModelId = hardwareModelConsumerRest.addModel(model1);
+        Integer newModelId = hardwareModelRestConsumer.addModel(model1);
         assertEquals(id, newModelId);
     }
 }

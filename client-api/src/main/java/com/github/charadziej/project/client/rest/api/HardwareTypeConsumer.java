@@ -6,7 +6,7 @@ import com.github.charadziej.project.dao.HardwareType;
 import java.util.List;
 
 /**
- * Created by charadziej on 4/13/17.
+ * Interface for rest consumer
  */
 public interface HardwareTypeConsumer {
 

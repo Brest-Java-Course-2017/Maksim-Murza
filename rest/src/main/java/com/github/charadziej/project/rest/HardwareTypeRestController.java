@@ -20,12 +20,6 @@ public class HardwareTypeRestController {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    @ExceptionHandler({IllegalArgumentException.class})
-    public String incorrectDataError() {
-        return "{  \"response\" : \"Incorrect Data Error\" }";
-    }
-
     @Autowired
     HardwareTypeService hardwareTypeService;
 

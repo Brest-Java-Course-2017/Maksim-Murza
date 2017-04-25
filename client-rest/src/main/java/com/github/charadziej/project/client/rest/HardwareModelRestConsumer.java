@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
@@ -16,9 +18,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by charadziej on 4/13/17.
+ * Class which receives data from rest
  */
-public class HardwareModelConsumerRest implements HardwareModelConsumer {
+public class HardwareModelRestConsumer implements HardwareModelConsumer {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
@@ -27,10 +29,13 @@ public class HardwareModelConsumerRest implements HardwareModelConsumer {
     private String modelsUrl;
     private String modelUrl;
 
-    @Autowired
-    RestTemplate restTemplate;
+    ClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+    RestTemplate restTemplate = new RestTemplate(requestFactory);
+    {
+        restTemplate.setErrorHandler(new CustomResponseErrorHandler());
+    }
 
-    public HardwareModelConsumerRest(String url, String modelsUrl, String modelUrl) {
+    public HardwareModelRestConsumer(String url, String modelsUrl, String modelUrl) {
         this.url = url;
         this.modelsUrl = modelsUrl;
         this.modelUrl = modelUrl;
@@ -91,19 +96,15 @@ public class HardwareModelConsumerRest implements HardwareModelConsumer {
     }
 
     @Override
-    public List<HardwareModel> getModelsByPeriod(Date begin, Date end) throws ServerDataAccessException {
-        String beginStr, endStr;
+    public List<HardwareModel> getModelsByPeriod(Date begin, Date end)
+            throws ServerDataAccessException {
 
-        if(begin != null)
-            beginStr = FORMATTER.format(begin);
-        else beginStr = "%00";
-        if(end != null)
-            endStr = FORMATTER.format(end);
-        else endStr = "%00";
+        String beginStr = (begin != null ? "begin=" + FORMATTER.format(begin) + "&" : "");
+        String endStr = (end != null ? "end=" + FORMATTER.format(end) : "");
 
-        LOGGER.debug("logger getModelsByPeriod({},{})", beginStr, endStr);
+        LOGGER.debug("logger getModelsByPeriod({},{})", begin, end);
         ResponseEntity responseEntity = restTemplate.getForEntity(url + modelsUrl +
-                "/period?begin=" +  beginStr + "&end=" + endStr, List.class);
+                "/period?" + beginStr + endStr, List.class);
         List<HardwareModel> hardwareModels = (List<HardwareModel>) responseEntity.getBody();
         return hardwareModels;
     }

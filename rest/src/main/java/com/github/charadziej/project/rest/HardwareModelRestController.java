@@ -26,12 +26,6 @@ public class HardwareModelRestController {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    @ExceptionHandler({IllegalArgumentException.class})
-    public String incorrectDataError() {
-        return "{  \"response\" : \"Incorrect Data Error\" }";
-    }
-
     @Autowired
     HardwareModelService hardwareModelService;
 
@@ -83,7 +77,7 @@ public class HardwareModelRestController {
         return hardwareModelService.deleteModel(modelId);
     }
 
-    //curl -v "localhost:8088/models/period?begin=%00&end=2014-04-04"
+    //curl -v "localhost:8088/models/period?begin=2009-03-03&end=2014-04-04"
     @GetMapping("/models/period")
     @ResponseStatus(HttpStatus.FOUND)
     public @ResponseBody List<HardwareModel> getModelsByPeriod(
@@ -92,7 +86,6 @@ public class HardwareModelRestController {
             @RequestParam(value = "end", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) throws ParseException {
         LOGGER.debug("getModelsByPeriod({},{})", begin, end);
-
         return hardwareModelService.getModelsByPeriod(begin, end);
     }
 }

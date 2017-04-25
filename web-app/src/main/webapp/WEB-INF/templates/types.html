@@ -42,7 +42,7 @@
                     <form class="btn btn-default" method="post" th:action="@{/type/delete(typeId=${type.typeId})}">
                         <button type="submit" class="glyphicon glyphicon-trash" style="border: none;
                             background-color: transparent;
-                            outline: none;">
+                            outline: none;"> <!--"~{${type.quantity} != 0 ? disabled}"-->
                         </button>
                     </form>
                 </div>

@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by charadziej on 4/13/17.
+ * Class which receives data from rest
  */
-public class HardwareTypeConsumerRest implements HardwareTypeConsumer{
+public class HardwareTypeRestConsumer implements HardwareTypeConsumer{
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -33,13 +33,13 @@ public class HardwareTypeConsumerRest implements HardwareTypeConsumer{
     @Autowired
     RestTemplate restTemplate;
 
-    public HardwareTypeConsumerRest(String url, String typesUrl, String typeUrl) {
+    public HardwareTypeRestConsumer(String url, String typesUrl, String typeUrl) {
         this.url = url;
         this.typesUrl = typesUrl;
         this.typeUrl = typeUrl;
     }
 
-    public HardwareTypeConsumerRest(String s) {
+    public HardwareTypeRestConsumer(String s) {
     }
 
     public void setRestTemplate(RestTemplate restTemplate) {

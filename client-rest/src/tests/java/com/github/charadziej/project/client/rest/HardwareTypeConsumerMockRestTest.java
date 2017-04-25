@@ -1,5 +1,6 @@
 package com.github.charadziej.project.client.rest;
 
+import com.github.charadziej.project.client.rest.api.HardwareTypeConsumer;
 import com.github.charadziej.project.dao.HardwareType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,7 +35,7 @@ public class HardwareTypeConsumerMockRestTest {
     private static final HardwareType type1 = new HardwareType("typeName1");
 
     @Autowired
-    private HardwareTypeConsumerRest hardwareTypeConsumerRest;
+    private HardwareTypeConsumer hardwareTypeConsumerRest;
 
     @Value("${protocol}://${host}:${port}")
     private String url;

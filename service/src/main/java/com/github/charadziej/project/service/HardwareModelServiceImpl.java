@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.util.Assert;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -104,15 +105,15 @@ public class HardwareModelServiceImpl implements HardwareModelService {
     }
 
     @Override
-    public List<HardwareModel> getModelsByPeriod(Date begin, Date end) throws DataAccessException {
+    public List<HardwareModel> getModelsByPeriod(Date begin, Date end) throws DataAccessException, ParseException {
         LOGGER.debug("getModelsByPeriod({},{}) in service", begin, end);
 
         if(begin == null && end == null)
             return hardwareModelDao.getAllModels();
         else if(begin == null)
-            begin = hardwareModelDao.getModelById(hardwareModelDao.getModelsQuantity()).getReleaseDate();
+            begin = FORMATTER.parse("1000-01-01");
         else if(end == null)
-            end = hardwareModelDao.getModelById(1).getReleaseDate();
+            end = FORMATTER.parse("3000-01-01");
 
         if(begin.compareTo(end) > 0)
             throw new IllegalArgumentException("Begin date is more then end date");
