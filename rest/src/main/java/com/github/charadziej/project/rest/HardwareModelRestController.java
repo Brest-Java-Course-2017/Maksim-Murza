@@ -1,8 +1,8 @@
 package com.github.charadziej.project.rest;
 
-import com.fasterxml.jackson.databind.node.TextNode;
 import com.github.charadziej.project.dao.HardwareModel;
 import com.github.charadziej.project.service.HardwareModelService;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +56,9 @@ public class HardwareModelRestController {
     @PostMapping("/model")
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody Integer addModel(@RequestBody HardwareModel hardwareModel) {
+        //DateUtils.addDays(hardwareModel.getReleaseDate(), 1);
         LOGGER.debug("addModel({})", hardwareModel);
+        System.out.println(hardwareModel.getReleaseDate().getTimezoneOffset());
         return hardwareModelService.addModel(hardwareModel);
     }
 
@@ -65,6 +66,7 @@ public class HardwareModelRestController {
     @PutMapping("/model")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public @ResponseBody Integer updateModel(@RequestBody HardwareModel hardwareModel) {
+        //DateUtils.addDays(hardwareModel.getReleaseDate(), 1);
         LOGGER.debug("updateModel({})", hardwareModel);
         return hardwareModelService.updateModel(hardwareModel);
     }

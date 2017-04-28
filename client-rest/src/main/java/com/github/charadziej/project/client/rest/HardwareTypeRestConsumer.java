@@ -30,16 +30,16 @@ public class HardwareTypeRestConsumer implements HardwareTypeConsumer{
     private String typesUrl;
     private String typeUrl;
 
-    @Autowired
-    RestTemplate restTemplate;
+    ClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+    RestTemplate restTemplate = new RestTemplate(requestFactory);
+    {
+        restTemplate.setErrorHandler(new CustomResponseErrorHandler());
+    }
 
     public HardwareTypeRestConsumer(String url, String typesUrl, String typeUrl) {
         this.url = url;
         this.typesUrl = typesUrl;
         this.typeUrl = typeUrl;
-    }
-
-    public HardwareTypeRestConsumer(String s) {
     }
 
     public void setRestTemplate(RestTemplate restTemplate) {

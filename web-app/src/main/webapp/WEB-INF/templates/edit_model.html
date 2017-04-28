@@ -1,43 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:vertical-align="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" href="../../resources/static/assets/bootstrap/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!--    <link rel="stylesheet" href="../../resources/static/assets/bootstrap/css/bootstrap.css"
-          th:href="@{/resources/static/assets/bootstrap/css/bootstrap.css}">
-    <link rel="stylesheet" href="../../resources/static/assets/bootstrap/css/bootstrap-theme.css"
-          th:href="@{/resources/static/assets/bootstrap/css/bootstrap-theme.css}">
-    <script src="../../resources/static/assets/bootstrap/js/bootstrap.min.js"></script>-->
+
 </head>
 <body>
+
 <div class="container">
+
     <div class="page-header">
         <h1>Edit model</h1>
     </div>
+
     <form method="post" th:action="@{/model/update}" th:object="${hardwareModel}">
+
         <div class="form-group">
             <input type="hidden" th:field="*{modelId}" name="modelId" />
             <label>Model name:</label>
-            <input type="text" class="form-input" name="modelName" th:field="*{modelName}"/>
+            <input type="text" class="form-input" name="modelName" th:field="*{modelName}" id="modelName"/>
         </div>
+
         <div class="form-group">
             <label for="typesList">Model type:</label>
             <select id="typesList" class="custom-select mb-2 mr-sm-2 mb-sm-0" th:field="*{modelType}" name="modelType">
                 <option th:each="type : ${typesList}" th:text="${type.typeName}" th:value="${type.typeName}"></option>
             </select>
         </div>
+
         <div class="form-group">
             <label>Release date:</label>
-            <input type="text" class="form-input" name="releaseDate" th:value="${#dates.format(hardwareModel.releaseDate, 'yyyy-MM-dd')}"/>
+            <input type="text" class="form-input" name="releaseDate" id="releaseDate" th:value="${#dates.format(hardwareModel.releaseDate, 'yyyy-MM-dd')}"/>
         </div>
-        <button type="submit" class="btn btn-default">Edit</button>
+
+        <button type="submit" class="btn btn-default" onclick="return checkModel();">Edit</button>
         <a class="btn btn-default" href="#" th:href="@{/models}">Cancel</a>
+
     </form>
 </div>
 
+<script src="../../resources/static/assets/js/jquery.min.js"></script>
+<script src="../../resources/static/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../resources/static/assets/js/validate.js"></script>
 
 </body>
 </html>

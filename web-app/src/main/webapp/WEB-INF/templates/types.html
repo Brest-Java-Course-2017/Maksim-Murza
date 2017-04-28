@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" href="../../resources/static/assets/bootstrap/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
@@ -22,7 +22,9 @@
 </nav>
 
 <div class="container">
+
     <h2>Hardware types</h2>
+
     <table class="table table-striped">
         <thead>
         <tr>
@@ -36,13 +38,16 @@
             <td th:text="${type.quantity}"></td>
             <td>
                 <div class="btn-group" role="group">
-                    <a class="btn btn-default" href="#" th:href="@{/type/edit(typeId=${type.typeId})}">
+
+                    <a class="btn btn-default" href="#"
+                       th:href="@{/type/edit(typeId=${type.typeId})}">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
+
                     <form class="btn btn-default" method="post" th:action="@{/type/delete(typeId=${type.typeId})}">
                         <button type="submit" class="glyphicon glyphicon-trash" style="border: none;
                             background-color: transparent;
-                            outline: none;"> <!--"~{${type.quantity} != 0 ? disabled}"-->
+                            outline: none;">
                         </button>
                     </form>
                 </div>
@@ -51,6 +56,9 @@
         </tbody>
     </table>
 </div>
+
+<script src="../../resources/static/assets/js/jquery.min.js"></script>
+<script src="../../resources/static/assets/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>

@@ -75,9 +75,10 @@ public class HardwareModelRestConsumer implements HardwareModelConsumer {
     @Override
     public int addModel(HardwareModel hardwareModel) throws ServerDataAccessException {
         LOGGER.debug("addModel({})", hardwareModel);
-        ResponseEntity responseEntity = restTemplate.postForEntity(url + modelUrl, hardwareModel,
+        Integer addedModelId = restTemplate.postForObject(url + modelUrl, hardwareModel,
                 Integer.class);
-        Integer addedModelId = (Integer) responseEntity.getBody();
+        System.out.println(hardwareModel.getReleaseDate().getTimezoneOffset());
+        //Integer addedModelId = (Integer) responseEntity.getBody();
         return addedModelId;
     }
 
