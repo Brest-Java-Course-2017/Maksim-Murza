@@ -51,7 +51,7 @@ public class HardwareModelRestControllerMockTest {
     private HardwareModelRestController hardwareModelRestController;
 
     @Autowired
-    HardwareModelService hardwareModelService;
+    private HardwareModelService hardwareModelService;
 
     private MockMvc mockMvc;
 
@@ -123,11 +123,18 @@ public class HardwareModelRestControllerMockTest {
 
     @Test
     public void addModel() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        //FORMATTER.setTimeZone(TimeZone.getTimeZone("GMP"));
+        mapper.setTimeZone(TimeZone.getTimeZone("Europe/Minsk"));
+
         HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
         expect(hardwareModelService.addModel(anyObject(HardwareModel.class))).andReturn(3);
         replay(hardwareModelService);
 
-        String newModelStr = new ObjectMapper().writeValueAsString(newModel);
+        String newModelStr = mapper.writeValueAsString(newModel);
+
+        System.out.println(newModel);
+        System.out.println(newModelStr);
 
         mockMvc.perform(
                 post("/model")

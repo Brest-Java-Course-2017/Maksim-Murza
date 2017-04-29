@@ -33,9 +33,6 @@ public class HardwareModelConsumerRestTest {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
-    Date begin;
-    Date end;
-
     @Autowired
     private HardwareModelConsumer hardwareModelConsumerRest;
 
@@ -62,7 +59,6 @@ public class HardwareModelConsumerRestTest {
     }
 
     @Test
-    @Ignore
     public void addModel() throws Exception {
         int modelsEquals = hardwareModelConsumerRest.getAllModels().size();
         HardwareModel newModel = new HardwareModel("newModel",
@@ -72,11 +68,9 @@ public class HardwareModelConsumerRestTest {
         Assert.assertEquals((Integer) (modelsEquals + 1), modelId);
         Assert.assertEquals(newModel.getReleaseDate(),
                 hardwareModelConsumerRest.getModelById(modelId).getReleaseDate());
-        // TODO: FIX decreasing date on one day
     }
 
     @Test
-    @Ignore
     public void updateModel() throws Exception {
         HardwareModel updatedModel = hardwareModelConsumerRest.getModelById(2);
         updatedModel.setModelName("newName");
@@ -95,8 +89,8 @@ public class HardwareModelConsumerRestTest {
 
     @Test
     public void getModelsByPeriod() throws Exception {
-        begin = FORMATTER.parse("2010-05-05");
-        end = FORMATTER.parse("2014-05-05");
+        Date begin = FORMATTER.parse("2010-05-05");
+        Date end = FORMATTER.parse("2014-05-05");
         List<HardwareModel> modelsList = hardwareModelConsumerRest.getModelsByPeriod(begin, end);
         LOGGER.debug("Returned list: {}", modelsList);
         Assert.assertNotNull(modelsList);

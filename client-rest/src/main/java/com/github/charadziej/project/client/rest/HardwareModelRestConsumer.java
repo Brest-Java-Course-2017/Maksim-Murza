@@ -13,6 +13,7 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -77,8 +78,6 @@ public class HardwareModelRestConsumer implements HardwareModelConsumer {
         LOGGER.debug("addModel({})", hardwareModel);
         Integer addedModelId = restTemplate.postForObject(url + modelUrl, hardwareModel,
                 Integer.class);
-        System.out.println(hardwareModel.getReleaseDate().getTimezoneOffset());
-        //Integer addedModelId = (Integer) responseEntity.getBody();
         return addedModelId;
     }
 

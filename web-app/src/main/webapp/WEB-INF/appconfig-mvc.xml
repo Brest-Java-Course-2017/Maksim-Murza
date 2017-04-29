@@ -22,10 +22,16 @@
 
     <bean id="customResponseErrorHandler" class="com.github.charadziej.project.client.rest.CustomResponseErrorHandler"/>
 
+    <bean id="mapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+        <property name="timeZone" value="Europe/Minsk"/>
+    </bean>
+
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <property name="messageConverters">
             <list>
-                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="objectMapper" ref="mapper"/>
+                </bean>
             </list>
         </property>
         <property name="errorHandler" ref="customResponseErrorHandler"/>

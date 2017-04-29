@@ -58,7 +58,6 @@ public class HardwareModelRestController {
     public @ResponseBody Integer addModel(@RequestBody HardwareModel hardwareModel) {
         //DateUtils.addDays(hardwareModel.getReleaseDate(), 1);
         LOGGER.debug("addModel({})", hardwareModel);
-        System.out.println(hardwareModel.getReleaseDate().getTimezoneOffset());
         return hardwareModelService.addModel(hardwareModel);
     }
 

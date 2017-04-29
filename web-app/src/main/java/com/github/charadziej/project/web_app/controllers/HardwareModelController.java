@@ -13,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Web controller for requests to Hardware model
@@ -26,10 +29,10 @@ public class HardwareModelController {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Autowired
-    HardwareModelConsumer hardwareModelConsumer;
+    private HardwareModelConsumer hardwareModelConsumer;
 
     @Autowired
-    HardwareTypeConsumer hardwareTypeConsumer;
+    private HardwareTypeConsumer hardwareTypeConsumer;
 
     @GetMapping("/models")
     public String getAllModels(Model model) {
