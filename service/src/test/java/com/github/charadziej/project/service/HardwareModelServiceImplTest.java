@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -34,10 +33,10 @@ public class HardwareModelServiceImplTest {
     private final String NEW_MODEL_TYPE_NAME = "CPU";
 
     @Autowired
-    HardwareModelService hardwareModelService;
+    private HardwareModelService hardwareModelService;
 
     @Autowired
-    HardwareModelDao hardwareModelDao;
+    private HardwareModelDao hardwareModelDao;
 
     @Test
     public void getAllModels() throws Exception {

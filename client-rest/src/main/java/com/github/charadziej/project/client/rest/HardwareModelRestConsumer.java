@@ -3,17 +3,13 @@ package com.github.charadziej.project.client.rest;
 import com.github.charadziej.project.client.ServerDataAccessException;
 import com.github.charadziej.project.client.rest.api.HardwareModelConsumer;
 import com.github.charadziej.project.dao.HardwareModel;
-import com.github.charadziej.project.dao.HardwareType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

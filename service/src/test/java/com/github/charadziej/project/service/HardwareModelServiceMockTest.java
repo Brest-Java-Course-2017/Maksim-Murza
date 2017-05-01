@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,13 +36,13 @@ public class HardwareModelServiceMockTest {
     private final String TYPE_NAME = "TypeName";
 
     @Autowired
-    HardwareModelService hardwareModelService;
+    private HardwareModelService hardwareModelService;
 
     @Autowired
-    HardwareModelDao mockHardwareModelDao;
+    private HardwareModelDao mockHardwareModelDao;
 
     @Autowired
-    HardwareTypeDao mockHardwareTypeDao;
+    private HardwareTypeDao mockHardwareTypeDao;
 
     @After
     public void tearDown() {

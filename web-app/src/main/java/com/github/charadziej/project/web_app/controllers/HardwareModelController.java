@@ -4,7 +4,6 @@ import com.github.charadziej.project.client.rest.api.HardwareModelConsumer;
 import com.github.charadziej.project.client.rest.api.HardwareTypeConsumer;
 import com.github.charadziej.project.dao.HardwareModel;
 import com.github.charadziej.project.dao.HardwareType;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
+
 
 /**
  * Web controller for requests to Hardware model

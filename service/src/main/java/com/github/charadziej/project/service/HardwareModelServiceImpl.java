@@ -9,7 +9,6 @@ import org.springframework.util.Assert;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -22,10 +21,10 @@ public class HardwareModelServiceImpl implements HardwareModelService {
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
     @Autowired
-    HardwareModelDao hardwareModelDao;
+    private HardwareModelDao hardwareModelDao;
 
     @Autowired
-    HardwareTypeDao hardwareTypeDao;
+    private HardwareTypeDao hardwareTypeDao;
 
     public void setHardwareModelDao(HardwareModelDao hardwareModelDao) {
         this.hardwareModelDao = hardwareModelDao;

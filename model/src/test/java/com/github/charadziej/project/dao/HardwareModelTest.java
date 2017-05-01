@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -18,7 +17,7 @@ public class HardwareModelTest {
     private static final String MODEL_NAME = "Intel core i5";
     private static final String MODEL_TYPE_NAME = "CPU";
 
-    HardwareModel model = new HardwareModel();
+    private HardwareModel model = new HardwareModel();
 
     @Test
     public void getModelId() throws Exception {

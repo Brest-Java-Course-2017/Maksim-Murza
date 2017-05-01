@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,16 +30,16 @@ public class HardwareTypeServiceMockTest {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
 
-    HardwareType newType = new HardwareType("CPU");
+    private HardwareType newType = new HardwareType("CPU");
 
     @Autowired
-    HardwareTypeService hardwareTypeService;
+    private HardwareTypeService hardwareTypeService;
 
     @Autowired
-    HardwareTypeDao mockHardwareTypeDao;
+    private HardwareTypeDao mockHardwareTypeDao;
 
     @Autowired
-    HardwareModelDao mockHardwareModelDao;
+    private HardwareModelDao mockHardwareModelDao;
 
     @After
     public void tearDown() {

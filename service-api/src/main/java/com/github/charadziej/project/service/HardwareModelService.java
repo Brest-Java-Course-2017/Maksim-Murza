@@ -1,11 +1,9 @@
 package com.github.charadziej.project.service;
 
 import com.github.charadziej.project.dao.HardwareModel;
-import org.springframework.cglib.core.Local;
 import org.springframework.dao.DataAccessException;
 
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 

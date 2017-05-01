@@ -3,9 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--<link rel="stylesheet" href="../../resources/static/assets/bootstrap/css/bootstrap.min.css">-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+    <link rel="stylesheet" href="../../resources/static/assets/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -35,7 +33,7 @@
         <tbody>
         <tr th:each="type : ${typesList}">
             <td th:text="${type.typeName}"></td>
-            <td th:text="${type.quantity}"></td>
+            <td th:text="${type.quantity}" id="quantity"></td>
             <td>
                 <div class="btn-group" role="group">
 
@@ -44,8 +42,11 @@
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
 
-                    <form class="btn btn-default" method="post" th:action="@{/type/delete(typeId=${type.typeId})}">
-                        <button type="submit" class="glyphicon glyphicon-trash" style="border: none;
+                    <form class="btn btn-default" method="post"
+                          th:action="@{/type/delete(typeId=${type.typeId})}">
+                        <button type="submit" class="glyphicon glyphicon-trash" th:id="${type.quantity}"
+                                onclick="return checkDeletingType(this.id);"
+                                style="border: none;
                             background-color: transparent;
                             outline: none;">
                         </button>
@@ -59,6 +60,7 @@
 
 <script src="../../resources/static/assets/js/jquery.min.js"></script>
 <script src="../../resources/static/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../resources/static/assets/js/validate.js"></script>
 
 </body>
 </html>

@@ -4,7 +4,6 @@ import com.github.charadziej.project.dao.HardwareModel;
 import com.github.charadziej.project.dao.HardwareModelDao;
 import com.github.charadziej.project.dao.HardwareType;
 import com.github.charadziej.project.dao.HardwareTypeDao;
-import com.github.charadziej.project.service.HardwareTypeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +20,10 @@ public class HardwareTypeServiceImpl implements HardwareTypeService {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Autowired
-    HardwareTypeDao hardwareTypeDao;
+    private HardwareTypeDao hardwareTypeDao;
 
     @Autowired
-    HardwareModelDao hardwareModelDao;
+    private HardwareModelDao hardwareModelDao;
 
     public void setHardwareTypeDao(HardwareTypeDao hardwareTypeDao) {
         this.hardwareTypeDao = hardwareTypeDao;

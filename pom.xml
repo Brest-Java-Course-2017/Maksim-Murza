@@ -38,6 +38,7 @@
         <jackson-datatype.version>2.8.6</jackson-datatype.version>
         <thymeleaf.version>3.0.3.RELEASE</thymeleaf.version>
         <commos-lang.version>2.2</commos-lang.version>
+        <slf4j.version>1.7.25</slf4j.version>
     </properties>
 
     <dependencyManagement>

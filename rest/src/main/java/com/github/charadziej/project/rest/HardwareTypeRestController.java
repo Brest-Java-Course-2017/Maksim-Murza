@@ -1,6 +1,5 @@
 package com.github.charadziej.project.rest;
 
-import com.github.charadziej.project.dao.HardwareModel;
 import com.github.charadziej.project.dao.HardwareType;
 import com.github.charadziej.project.service.HardwareTypeService;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +20,7 @@ public class HardwareTypeRestController {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Autowired
-    HardwareTypeService hardwareTypeService;
+    private HardwareTypeService hardwareTypeService;
 
     //curl -v localhost:8088/types
     @GetMapping("/types")

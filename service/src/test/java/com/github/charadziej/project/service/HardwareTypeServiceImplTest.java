@@ -1,12 +1,10 @@
 package com.github.charadziej.project.service;
 
-import com.github.charadziej.project.dao.HardwareModel;
 import com.github.charadziej.project.dao.HardwareType;
 import com.github.charadziej.project.dao.HardwareTypeDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +28,13 @@ public class HardwareTypeServiceImplTest {
 
     private final Integer TYPE_ID = 4;
     private final String TYPE_NAME = "CPU";
-    HardwareType newType = new HardwareType("Monitor");
+    private HardwareType newType = new HardwareType("Monitor");
 
     @Autowired
-    HardwareTypeService hardwareTypeService;
+    private HardwareTypeService hardwareTypeService;
 
     @Autowired
-    HardwareTypeDao hardwareTypeDao;
+    private HardwareTypeDao hardwareTypeDao;
 
     @Test
     public void getAllTypes() throws Exception {

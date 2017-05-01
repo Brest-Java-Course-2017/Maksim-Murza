@@ -2,7 +2,6 @@ package com.github.charadziej.project.dao;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 

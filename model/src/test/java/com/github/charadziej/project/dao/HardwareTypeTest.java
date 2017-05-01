@@ -12,7 +12,7 @@ public class HardwareTypeTest {
     private static final String TYPE_NAME = "CPU";
     private static final Integer QUANTITY = 1;
 
-    HardwareType type = new HardwareType();
+    private HardwareType type = new HardwareType();
 
     @Test
     public void getTypeIdTest() throws Exception {

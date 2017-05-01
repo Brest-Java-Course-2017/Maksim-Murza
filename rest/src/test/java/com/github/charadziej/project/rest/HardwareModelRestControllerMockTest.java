@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +21,9 @@ import org.springframework.util.MultiValueMap;
 import javax.annotation.Resource;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 
 import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -124,7 +121,6 @@ public class HardwareModelRestControllerMockTest {
     @Test
     public void addModel() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        //FORMATTER.setTimeZone(TimeZone.getTimeZone("GMP"));
         mapper.setTimeZone(TimeZone.getTimeZone("Europe/Minsk"));
 
         HardwareModel newModel = new HardwareModel(MODEL_NAME, MODEL_TYPE, FORMATTER.parse("2014-03-03"));
